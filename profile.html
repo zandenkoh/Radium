@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Profile | Radium</title>
+    <link rel="stylesheet" href="./styles/profile.css">
+    <script src="https://kit.fontawesome.com/a47fae704c.js" crossorigin="anonymous"></script>
+    <link rel="icon" href="./assets/San-Ti (1).png" type="image/png">
+</head>
+<body>
+    <div class="container">
+        <div class="profile-content">
+            <!-- Left Side -->
+            <div class="profile-image-section">
+                <img id="profile-image" src="" alt="Your Profile Image" class="profile-image">
+                <button id="change-image-btn">Upload Your Image</button>
+                <input type="file" id="image-upload" style="display: none;">
+            </div>
+            
+            <!-- Right Side -->
+            <div class="profile-info-section">
+                <div id="profile-name-container">
+                    <label for="profile-name">Name:</label>
+                    <input type="text" id="profile-name" placeholder="Enter your name" required>
+                </div>
+                <div id="profile-email-container">
+                    <label for="profile-email">Email:</label>
+                    <span id="profile-email"></span>
+                </div>
+                <div id="profile-bio-container">
+                    <label for="profile-bio">Bio:</label>
+                    <textarea id="profile-bio" placeholder="Enter a short bio"></textarea>
+                </div>
+                <div id="edit-options" style="display: none;">
+                    <button id="save-btn">Save</button>
+                    <button id="cancel-btn">Cancel</button>
+                </div>
+                <button id="next-btn">Save</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://www.gstatic.com/firebasejs/8.2.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.2.1/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.2.1/firebase-firestore.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.2.1/firebase-storage.js"></script>
+    <script src="./scripts/profile.js"></script>
+</body>
+</html>

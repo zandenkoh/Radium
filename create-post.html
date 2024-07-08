@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Radium</title>
+    <link rel="stylesheet" href="./styles/create-post.css">
+    <link rel="icon" href="./assets/San-Ti (1).png" type="image/png">
+</head>
+<body>
+    <div class="container">
+        <aside class="sidebar">
+            <!--<div class="logo">MyBlog</div>-->
+            <nav>
+                <ul>
+                    <li><a href="index.html"><img src="./assets/home-home-svgrepo-com.svg"></a></li>
+                    <li><a href="index.html"><img src="./assets/svgexport-6.svg"></a></li>
+                    <li><a href="index.html"><img src="./assets/svgexport-8.svg"></a></li>
+                    <li><a href="index.html"><img src="./assets/svgexport-9.svg"></a></li>
+                    <!--<li><a href="sign-up.html">Sign Up</a></li>
+                    <li><a href="log-in.html">Log In</a></li>-->
+                    <hr>
+                    <li><a href="create-post.html"><img src="./assets/svgexport-4.svg"></a></li>
+                </ul>
+                <a href="profile-edit.html" class="user-info">
+                    <div class="user-circle" id="profile-pic"></div>
+                    <span style="display: none;" id="user-name"></span>
+                </a>
+            </nav>
+        </aside>
+        
+        <div class="main-content">
+            <!--<header>
+                <div class="search-bar">
+                    <input type="text" placeholder="Search...">
+                </div>
+                <div class="header-icons">
+                    <div class="icon">+</div>
+                </div>
+            </header>-->
+            
+            <main>
+                <h1></h1>
+                <form class="create-post-form" id="create-post-form">
+                    <div class="form-group">
+                        <input type="url" id="image" name="image" placeholder="Article Image URL" required>
+                    </div>
+                    <div style="display: none;" class="form-group">
+                        <input type="file" id="upload-image" name="upload-image" accept="image/*">
+                    </div>
+
+                    <div class="form-group">
+                        <textarea type="text" rows="1" id="title" name="title" placeholder="Title" required></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <textarea type="text" rows="2.5" id="description" name="description" placeholder="Short description about your story... " required></textarea>
+                    </div>
+                    
+                    <div class="form-group">
+                        <textarea id="content" name="content" rows="2" placeholder="Tell your story..." required></textarea>
+                    </div>
+                    
+                    <button class="submit-button" type="submit">Publish</button>
+                </form>
+                <div id="error-message" style="color: red;"></div>
+            </main>
+        </div>
+    </div>
+    
+    <script src="https://www.gstatic.com/firebasejs/8.2.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.2.1/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.2.1/firebase-firestore.js"></script>
+    <script src="scripts/create-post.js"></script>
+    
+    <script>
+      // Your web app's Firebase configuration
+      const firebaseConfig = {
+        apiKey: "AIzaSyBsG6KOqNFSmgmW5FFdEdnvIegKYFdaFko",
+        authDomain: "logz-6b051.firebaseapp.com",
+        projectId: "logz-6b051",
+        storageBucket: "logz-6b051.appspot.com",
+        messagingSenderId: "821932097794",
+        appId: "1:821932097794:web:0bfc112f5ccdd12b39421b"
+      };
+    
+      // Initialize Firebase
+      firebase.initializeApp(firebaseConfig);
+    </script>
+</body>
+</html>

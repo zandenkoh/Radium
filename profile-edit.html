@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile | Radium</title>
+    <link rel="stylesheet" href="./styles/profile-edit.css">
+    <script src="https://kit.fontawesome.com/a47fae704c.js" crossorigin="anonymous"></script>
+    <link rel="icon" href="./assets/San-Ti (1).png" type="image/png">
+</head>
+<body>
+    <div class="container">
+        <aside class="sidebar">
+            <!--<div class="logo">MyBlog</div>-->
+            <nav>
+                <ul>
+                    <li><a href="index.html"><img src="./assets/home-home-svgrepo-com.svg" alt="Home"></a></li>
+                    <li><a href="index.html"><img src="./assets/svgexport-6.svg" alt="Icon 1"></a></li>
+                    <li><a href="index.html"><img src="./assets/svgexport-8.svg" alt="Icon 2"></a></li>
+                    <li><a href="index.html"><img src="./assets/svgexport-9.svg" alt="Icon 3"></a></li>
+                    <hr>
+                    <li><a href="create-post.html"><img src="./assets/svgexport-4.svg" alt="Create Post"></a></li>
+                </ul>
+                <a href="profile-edit.html" class="user-info">
+                    <div class="user-circle" id="profile-pic"></div>
+                    <span style="display: none;" id="user-name"></span>
+                </a>
+            </nav>
+        </aside>
+        <div class="main-content">
+            <!--<header>
+                <img src="logo.png" alt="LOGz Logo">
+            </header>-->
+            <main>
+                <div class="profile-content">
+                    <!-- Left Side -->
+                    <div class="profile-image-section">
+                        <img id="profile-image" src="" alt=" " class="profile-image">
+                        <button id="change-image-btn">Change Your Image</button>
+                        <input type="file" id="image-upload" style="display: none;">
+                    </div>
+                    
+                    <!-- Right Side -->
+                    <div class="profile-info-section">
+                        <div id="profile-name-container">
+                            <label for="profile-name">Name:</label>
+                            <span id="profile-name"></span>
+                        </div>
+                        <div id="profile-email-container">
+                            <label for="profile-email">Email:</label>
+                            <span id="profile-email"></span>
+                        </div>
+                        <div id="profile-bio-container">
+                            <label for="profile-bio">Bio:</label>
+                            <p id="profile-bio"></p>
+                        </div>
+                        <button id="edit-btn"><i class="fa-solid fa-pen"></i> Edit Profile</button>
+                        <div id="edit-options" style="display: none;">
+                            <button id="save-btn">Save</button>
+                            <button id="cancel-btn">Cancel</button>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <script src="https://www.gstatic.com/firebasejs/8.2.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.2.1/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.2.1/firebase-firestore.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.2.1/firebase-storage.js"></script>
+    <script src="./scripts/profile-edit.js"></script>
+
+    <script>
+      // Your web app's Firebase configuration
+      const firebaseConfig = {
+        apiKey: "AIzaSyBsG6KOqNFSmgmW5FFdEdnvIegKYFdaFko",
+        authDomain: "logz-6b051.firebaseapp.com",
+        projectId: "logz-6b051",
+        storageBucket: "logz-6b051.appspot.com",
+        messagingSenderId: "821932097794",
+        appId: "1:821932097794:web:0bfc112f5ccdd12b39421b"
+      };
+
+      // Initialize Firebase
+      firebase.initializeApp(firebaseConfig);
+    </script>
+</body>
+</html>
