@@ -7,6 +7,9 @@
     <link rel="stylesheet" href="./styles/profile-edit.css">
     <script src="https://kit.fontawesome.com/a47fae704c.js" crossorigin="anonymous"></script>
     <link rel="icon" href="./assets/San-Ti (1).png" type="image/png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,300;0,400;0,700;0,900;1,300;1,400;1,700;1,900&display=swap" rel="stylesheet">
 </head>
 <body>
     <div class="container">
@@ -32,7 +35,8 @@
                 <img src="logo.png" alt="LOGz Logo">
             </header>-->
             <main>
-                <div class="profile-content">
+                <div class="overlay" id="overlay"></div>
+                <div class="profile-content" id="profile-content">
                     <!-- Left Side -->
                     <div class="profile-image-section">
                         <img id="profile-image" src="" alt=" " class="profile-image">
@@ -61,6 +65,30 @@
                         </div>
                     </div>
                 </div>
+
+                <div class="main-user-content">
+                    <div class="user-header">
+                        <div class="user-banner" id="user-banner"></div>
+                        <div class="user-content-profile">
+                            <div class="inside-user-content-profile">
+                                <div class="profile-content-image" id="profile-content-pic"></div>
+                                <h1 id="user-name-large"></h1>
+                            </div>
+                            <button id="edit-user-btn"><i class="fa-solid fa-pen"></i> Edit Profile</button>
+                        </div>
+                        <div class="user-content-about" id="user-content-about">
+                            <p id="user-about"></p>
+                        </div>                        
+                    </div>
+                    <div class="user-main">
+                        <!--<hr class="between-info-article">-->
+                        <section id="user-articles">
+                            <h2 id="article-user">Articles</h2>
+                            <div id="articles-container"></div>
+                        </section>
+                    </div>
+                </div>
+                
             </main>
         </div>
     </div>
