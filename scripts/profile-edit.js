@@ -48,8 +48,8 @@ function fetchUserProfile() {
                     profileImage.src = data.profilePicture;
                     profilePic.style.backgroundImage = `url(${data.profilePicture})`;
                 } else {
-                    profileImage.src = 'https://i.pinimg.com/474x/81/8a/1b/818a1b89a57c2ee0fb7619b95e11aebd.jpg';
-                    profilePic.style.backgroundImage = 'url(https://i.pinimg.com/474x/81/8a/1b/818a1b89a57c2ee0fb7619b95e11aebd.jpg)';
+                    profileImage.src = 'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b5/Windows_10_Default_Profile_Picture.svg/2048px-Windows_10_Default_Profile_Picture.svg.png';
+                    profilePic.style.backgroundImage = 'url(https://upload.wikimedia.org/wikipedia/commons/thumb/b/b5/Windows_10_Default_Profile_Picture.svg/2048px-Windows_10_Default_Profile_Picture.svg.png)';
                 }
             }
         })
