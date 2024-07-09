@@ -202,6 +202,7 @@ main hr {
     background-color: #ccc;
     background-size: cover;
     background-position: center;
+    object-fit: cover;
     margin-right: 10px;
 }
 
