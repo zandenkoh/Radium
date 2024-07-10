@@ -32,27 +32,67 @@ const profileContent = document.getElementById('profile-content');
 const profileAbout = document.getElementById('user-about');
 const overlay = document.getElementById('overlay');
 const articleWritten = document.getElementById('article-user');
+const loadingScreen = document.getElementById('loading-screen');
+const loadingBar = document.getElementById('loading-bar');
 
-/*
-// Fetch user data on page load
-auth.onAuthStateChanged(user => {
-    if (user) {
-        userId = user.uid;
-        fetchUserProfile();
+let progress = 0;
+
+const updateProgress = (increment) => {
+    progress += increment;
+    loadingBar.style.width = `${progress}%`;
+    if (progress >= 100) {
+        setTimeout(() => {
+            loadingScreen.style.display = 'none';
+        }, 1500); // Delay slightly more than the transition duration
     }
-});*/
+};
+
+
+// Fetch logged-in user's profile picture
+const fetchMyUserProfile = () => {
+    const user = auth.currentUser;
+
+    if (user) {
+        firestore.collection('users').doc(user.uid).get().then((doc) => {
+            if (doc.exists) {
+                const data = doc.data();
+                if (data.profilePicture) {
+                    profilePic.style.backgroundImage = `url(${data.profilePicture})`;
+                } else {
+                    profilePic.style.backgroundImage = 'url(https://i.pinimg.com/474x/81/8a/1b/818a1b89a57c2ee0fb7619b95e11aebd.jpg)';
+                }
+            } else {
+                console.log('No such user!');
+            }
+            updateProgress(50);
+        }).catch((error) => {
+            console.error('Error fetching user profile:', error);
+            updateProgress(50);
+        });
+    } else {
+        console.log('No user is signed in.');
+        updateProgress(50);
+    }
+};
+
+// Fetch user data on page load
 document.addEventListener('DOMContentLoaded', () => {
+    auth.onAuthStateChanged(user => {
+        if (user) {
+            fetchMyUserProfile();
+        }
+    });
+
     const userIdFromUrl = getUserIdFromUrl();
 
     if (userIdFromUrl) {
-        userId = userIdFromUrl;
-        displayUserArticles(userId);
-        fetchUserProfile(userId);
+        displayUserArticles(userIdFromUrl);
+        fetchUserProfile(userIdFromUrl);
     } else {
         console.log('No user ID found in the URL.');
+        updateProgress(50);
     }
 });
-
 
 function getUserIdFromUrl() {
     const params = new URLSearchParams(window.location.search);
@@ -77,13 +117,13 @@ function fetchUserProfile(userId) {
                     userBanner.style.backgroundImage = 'url(https://i.pinimg.com/474x/81/8a/1b/818a1b89a57c2ee0fb7619b95e11aebd.jpg)';
                 }
             }
+            updateProgress(50);
         })
         .catch(error => {
             console.error('Error fetching user profile:', error);
+            updateProgress(50);
         });
 }
-
-
 
 function updateProfile(name, bio) {
     firestore.collection('users').doc(userId).update({ name, bio })
@@ -136,6 +176,7 @@ function displayUserArticles(userId) {
             
             if (querySnapshot.empty) {
                 articlesContainer.innerHTML = '<p>No articles found.</p>';
+                updateProgress(50);
                 return;
             }
             
@@ -163,8 +204,10 @@ function displayUserArticles(userId) {
                 
                 articlesContainer.appendChild(articleElement);
             });
+            updateProgress(50);
         })
         .catch(error => {
             console.error('Error fetching articles:', error);
+            updateProgress(50);
         });
-} 
+}
