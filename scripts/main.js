@@ -27,6 +27,21 @@ auth.onAuthStateChanged((user) => {
   }
 });
 
+const loadingScreen = document.getElementById('loading-screen');
+const loadingBar = document.getElementById('loading-bar');
+
+let progress = 0;
+
+const updateProgress = (increment) => {
+    progress += increment;
+    loadingBar.style.width = `${progress}%`;
+    if (progress >= 100) {
+        setTimeout(() => {
+            loadingScreen.style.display = 'none';
+        }, 1500); // Delay slightly more than the transition duration
+    }
+};
+
 // Fetch user profile from Firestore
 const fetchUserProfile = (userId) => {
   firestore.collection('users').doc(userId).get().then((doc) => {
@@ -40,11 +55,14 @@ const fetchUserProfile = (userId) => {
       } else {
         profilePic.style.backgroundImage = 'url(default-profile-pic.jpg)'; // Placeholder image if none exists
       }
+      updateProgress(100);
     } else {
       console.log('No such document!');
+      updateProgress(50);
     }
   }).catch((error) => {
     console.log('Error getting document:', error);
+    updateProgress(50);
   });
 };
 
@@ -103,7 +121,7 @@ async function loadArticles(query = '') {
             <div class="author-info">
               <img src="${authorData.profilePicture || './assets/default-profile-pic.jpg'}" alt="Author" class="author-pic">
               <div class="author-details">
-                <span class="author-name">${authorData.name || 'Unknown Author'}</span>
+                <p class="author-name" href="user.html?userId=${data.authorId}">${authorData.name || 'Unknown Author'}</p>
               </div>
             </div>
           </div>
