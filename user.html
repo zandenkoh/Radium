@@ -10,9 +10,20 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,300;0,400;0,700;0,900;1,300;1,400;1,700;1,900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap" rel="stylesheet">
 </head>
 <body>
-    <div class="container">
+
+    <div id="loading-screen">
+        <div id="loading-content">
+            <img src="./assets/San-Ti (1).png" alt="Loading">
+            <div id="loading-bar-container">
+                <div id="loading-bar"></div>
+            </div>
+        </div>
+    </div>
+
+    <div id="container" class="container">
         <aside class="sidebar">
             <!--<div class="logo">MyBlog</div>-->
             <nav>
@@ -24,10 +35,10 @@
                     <hr>
                     <li><a href="create-post.html"><img src="./assets/svgexport-4.svg" alt="Create Post"></a></li>
                 </ul>
-                <!--<a href="profile-edit.html" class="user-info">
+                <a href="profile-edit.html" class="user-info">
                     <div class="user-circle" id="profile-pic"></div>
                     <span style="display: none;" id="user-name"></span>
-                </a>-->
+                </a>
             </nav>
         </aside>
         <div class="main-content">
