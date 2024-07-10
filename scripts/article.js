@@ -134,12 +134,29 @@ const auth = firebase.auth();
 // Check authentication and fetch user data
 auth.onAuthStateChanged((user) => {
     if (user) {
-        currentUser = user;
+        currentUser = user;        
+        localStorage.setItem('userId', user.uid);
+
         fetchUserProfile(user.uid); // Pass user ID here
     } else {
         window.location.href = 'log-in.html'; // Redirect if not authenticated
     }
 });
+
+const loadingScreen = document.getElementById('loading-screen');
+const loadingBar = document.getElementById('loading-bar');
+
+let progress = 0;
+
+const updateProgress = (increment) => {
+    progress += increment;
+    loadingBar.style.width = `${progress}%`;
+    if (progress >= 100) {
+        setTimeout(() => {
+            loadingScreen.style.display = 'none';
+        }, 1500); // Delay slightly more than the transition duration
+    }
+};
 
 // Function to fetch and display the article
 const displayArticle = async () => {
@@ -173,7 +190,7 @@ const displayArticle = async () => {
                         <div class="author-info">
                             <img src="${profilePicture}" alt="Author" class="author-pic">
                             <div class="author-details">
-                                <span class="author-name">${authorName}</span>
+                                <span class="author-name"><a href="user.html?userId=${data.authorId}">${authorName}</a></span>
                                 <span class="publish-date">${publishDate}</span>
                             </div>
                         </div>
@@ -220,11 +237,14 @@ const fetchUserProfile = () => {
             } else {
                 console.log('No such user!');
             }
+            updateProgress(50);
         }).catch((error) => {
             console.error('Error fetching user profile:', error);
+            updateProgress(50);
         });
     } else {
         console.log('No user is signed in.');
+        updateProgress(50);
     }
 };
 
