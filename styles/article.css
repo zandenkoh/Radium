@@ -211,12 +211,13 @@ main hr {
     flex-direction: column;
 }
 
-.author-name {
+.author-name a {
     font-size: 20px;
     font-weight: 100;
     color: #303030;
     font-family: 'Open Sans';
     margin-bottom: 4px;
+    text-decoration: none;
 }
 
 .author-name:hover {
@@ -231,12 +232,45 @@ main hr {
 }
 
 
+/* Loading screen styles */
+#loading-screen {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    background: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+}
 
+#loading-content {
+    text-align: center;
+    width: 100%;
+}
 
+#loading-content img {
+    height: 100px;
+    width: 100px;
+    border-radius: 15px;
+}
 
+#loading-bar-container {
+    width: 50%;
+    height: 7px;
+    background: #e0e0e0;
+    margin-top: 50px;
+    border-radius: 10px;
+    overflow: hidden;
+    text-align: center;
+    left: 50%;
+    transform: translateX(50%);
+}
 
-
-
-
-
-
+#loading-bar {
+    width: 0;
+    height: 100%;
+    background: #757575;
+    border-radius: 10px;
+    transition: 1.5s ease;
+}
