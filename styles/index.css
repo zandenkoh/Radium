@@ -193,6 +193,13 @@ button:hover {
     width: 100%;
 }
 
+.article b {
+    font-family: "Roboto";
+    font-weight: 400;
+    font-size: 16px;
+    color: #000;
+}
+
 .article-link {
     display: block;
     text-decoration: none; /* Remove default link styling */
@@ -226,13 +233,14 @@ button:hover {
 .author-name {
     font-weight: 400;
     font-size: 15px;
-    color: #000;
+    color: #636363;
     font-family: 'Roboto';  
 }
 
 .publish-date {
-    font-size: 14px;
-    font-weight: 100;
+    font-family: "Roboto";
+    font-size: 16px;
+    font-weight: 400;
     color: #666;
 }
 
@@ -263,7 +271,7 @@ button:hover {
     font-size: 18px;
     margin: 0;
     font-family: 'Roboto';
-    color: #5a5a5a;
+    color: #434343;
     line-height: 24px;
     margin-bottom: 10px;
 }
