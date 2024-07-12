@@ -200,15 +200,19 @@ main h1 {
     overflow-y: hidden;
 }
 
+.form-group #title::placeholder {
+    color: #3a3a3a;
+}
+
 .form-group #description {
     padding: 10px;
     border: none;
     width: 100%;
     background: #fff;
-    color: #787878;
+    color: #6c6c6c;
     outline: none;
-    font-size: 20px;
-    font-family: "Roboto";
+    font-size: 22px;
+    font-family: "Merriweather", serif;
     font-weight: 300;
     margin-bottom: -16px;
     line-height: 1.5; /* Adjust based on your font size and design */
@@ -256,23 +260,190 @@ main h1 {
 
 .submit-button {
     font-family: "Roboto";
-    padding: 10px 40px;
+    padding: 10px 55px;
     padding-top: 12px;
     border: none;
     background-color: #fff;
     color: #797979;
-    border: 2px solid #797979;
+    border: 1px solid #797979;
     border-radius: 50px;
     cursor: pointer;
     letter-spacing: 1px;
     position: absolute;
     left: 50%;
     transform: translateX(-50%);
-    margin-top: 300px;
+    margin-top: 200px;
     transition: 0.2s ease;
 }
 
 .submit-button:hover {
-    border: 2px solid #454545;
+    border: 1px solid #454545;
     color: #454545;
+}
+
+button.disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+
+
+/* Styles for the popup modal */
+.popup-modal {
+    display: none; /* Hidden by default */
+    position: fixed;
+    z-index: 9999;
+    right: 0;
+    top: 0;
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+    background-color: #fff;
+}
+
+.popup-modal img {
+    position: absolute;
+    top: 100px;
+    left: 30%;
+    height: 40px;
+    width: 40px;
+    padding: 5px;
+    cursor: pointer;
+    border-radius: 50%;
+    border: 1px solid #757575;
+    z-index: 10;
+    background: transparent;
+}
+
+.popup-modal img:hover {
+    background: #f9f9f9;
+}
+
+.popup-content {
+    position: fixed;
+    background-color: #fff;
+    padding: 20px;
+    width: 60vw;
+    height: 60vh;
+    left: 20vw;
+    top: 25vh;
+    text-align: center;
+    border-radius: 5px;
+    z-index: 2;
+}
+
+.popup-content h2 {
+    margin-top: 0;
+    font-size: 24px;
+    text-align: center;
+    font-weight: 200;
+    font-size: 24px;
+    font-family: 'Roboto';
+    user-select: none;
+}
+
+.popup-content p {
+    font-weight: 600;
+    font-family: 'Roboto';
+    margin-top: 6px;
+}
+
+.popup-content .form-group {
+    margin-top: 30px;
+}
+
+.popup-content .form-group label {
+    margin-bottom: 20px;
+    font-size: 15px;
+    font-family: "Roboto";
+    font-weight: 300;
+}
+
+.popup-content .form-group input {
+    /*width: 60%;
+    padding: 10px 15px;
+    font-size: 16px;
+    border: none;
+    border-radius: 7px;
+    background: #f0f0f0;
+    outline: none;
+    margin-top: 10px;
+    flex-grow: 1;*/
+    width: 60%;
+    padding: 8.5px 10px;
+    font-size: 15px;
+    border: none;
+    background: #f0f0f0;
+    outline: none;
+    flex-grow: 1;
+}
+
+.tag-container {
+    margin-left: 20%;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    border-radius: 4px;
+    min-height: 40px;
+    align-items: center;
+
+    width: 60%;
+    padding: 10px 15px;
+    font-size: 16px;
+    border: none;
+    border-radius: 7px;
+    background: #f0f0f0;
+    outline: none;
+    margin-top: 10px;
+}
+.tag {
+    display: flex;
+    align-items: center;
+    background-color: #fff;
+    color: #000;
+    padding: 5px 10px;
+    border-radius: 3px;
+    font-size: 14px;
+}
+.tag button {
+    background: none;
+    border: none;
+    color: #000;
+    cursor: pointer;
+    margin-left: 10px;
+    font-size: 17px;
+    margin-top: 4px;
+}
+
+
+
+
+
+
+.popup-content .submit-button {
+    font-family: "Roboto";
+    padding: 10px 50px;
+    padding-top: 12px;
+    border: none;
+    background-color: #fff;
+    color: #797979;
+    border: 1px solid #797979;
+    border-radius: 50px;
+    cursor: pointer;
+    letter-spacing: 1px;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    margin-top: 70px;
+    transition: 0.2s ease;
+}
+
+.popup-content .submit-button:hover {
+    border: 1px solid #454545;
+    color: #454545;
+}
+
+.popup-content .submit-button.disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
 }
