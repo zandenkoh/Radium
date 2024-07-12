@@ -68,7 +68,7 @@ const fetchUserProfile = (userId) => {
 
 // Initialize Firestore
 const db = firebase.firestore();
-
+/*
 // Function to load articles
 async function loadArticles(query = '') {
   try {
@@ -143,13 +143,154 @@ async function loadArticles(query = '') {
     console.error('Error loading articles: ', error);
     document.getElementById('articles-container').innerHTML = '<p>Failed to load articles. Please try again later.</p>';
   }
+}*/
+// Function to load all articles
+async function loadAllArticles() {
+  try {
+    const articlesContainer = document.getElementById('articles-container');
+    const snapshot = await db.collection('posts').orderBy('timestamp', 'desc').get();
+
+    if (snapshot.empty) {
+      articlesContainer.innerHTML = '<p>No articles available.</p>';
+      return;
+    }
+
+    // Clear any existing content
+    articlesContainer.innerHTML = '';
+
+    // Fetch and display articles
+    for (const doc of snapshot.docs) {
+      const data = doc.data();
+
+      // Fetch author profile
+      const authorDoc = await firestore.collection('users').doc(data.authorId).get();
+      const authorData = authorDoc.data() || {};
+
+      // Create article element
+      const articleElement = document.createElement('article');
+      articleElement.classList.add('article');
+
+      // Generate HTML for the article
+      articleElement.innerHTML = `
+        <a href="article.html?id=${doc.id}" class="article-link">
+          <div class="article-header">
+            <div class="author-info">
+              <img src="${authorData.profilePicture || './assets/default-profile-pic.jpg'}" alt="Author" class="author-pic">
+              <div class="author-details">
+                <p class="author-name" href="user.html?userId=${data.authorId}"><b>${authorData.name || 'Unknown Author'}</b> in <b>${data.theme || 'Topic'}</b></p>
+              </div>
+            </div>
+          </div>
+          <div class="article-body">
+            <div class="article-text">
+              <h2 class="article-title">${data.title || 'No Title'}</h2>
+              <p class="article-excerpt">${data.description ? data.description.substring(0, 400) + '...' : 'No content available.'}</p>
+              <span class="publish-date">${data.timestamp ? new Date(data.timestamp.seconds * 1000).toLocaleDateString('en-GB', { month: 'long', day: 'numeric', year: 'numeric' }) : 'Unknown Date'} • ${data.timeRead || 'Unknown number of'} min read</span>
+            </div>
+            <!--<img src="${data.imageURL || 'No Image'}" class="article-image" style="width: 100%; max-height: 400px; object-fit: cover;">-->
+          </div>
+        </a>
+      `;
+
+      // Append article element to the container
+      articlesContainer.appendChild(articleElement);
+    }
+  } catch (error) {
+    console.error('Error loading articles: ', error);
+    document.getElementById('articles-container').innerHTML = '<p>Failed to load articles. Please try again later.</p>';
+  }
+}
+
+function preprocessKeywords(title, description) {
+  const titleKeywords = title.toLowerCase().split(' ');
+  const descriptionKeywords = description.toLowerCase().split(' ');
+  const keywords = [...new Set([...titleKeywords, ...descriptionKeywords])]; // Remove duplicates
+  return keywords;
+}
+
+async function saveArticle(articleData) {
+  const keywords = preprocessKeywords(articleData.title, articleData.description);
+  await db.collection('posts').add({
+    ...articleData,
+    keywords: keywords
+  });
+}
+
+async function loadSearchedArticles(query) {
+  try {
+    const articlesContainer = document.getElementById('articles-container');
+    const keywords = query.toLowerCase().split(' ');
+
+    let combinedResults = new Set();
+
+    for (const keyword of keywords) {
+      // Search for exact matches in the keywords array
+      const keywordSnapshot = await db.collection('posts').where('keywords', 'array-contains', keyword).get();
+      keywordSnapshot.forEach(doc => combinedResults.add(doc));
+    }
+
+    const querySnapshot = Array.from(combinedResults);
+
+    if (querySnapshot.length === 0) {
+      articlesContainer.innerHTML = '<p>No articles found matching the search criteria.</p>';
+      return;
+    }
+
+    // Clear any existing content
+    articlesContainer.innerHTML = '';
+
+    // Fetch and display articles
+    for (const doc of querySnapshot) {
+      const data = doc.data();
+
+      // Fetch author profile
+      const authorDoc = await firestore.collection('users').doc(data.authorId).get();
+      const authorData = authorDoc.data() || {};
+
+      // Create article element
+      const articleElement = document.createElement('article');
+      articleElement.classList.add('article');
+
+      // Generate HTML for the article
+      articleElement.innerHTML = `
+        <a href="article.html?id=${doc.id}" class="article-link">
+          <div class="article-header">
+            <div class="author-info">
+              <img src="${authorData.profilePicture || './assets/default-profile-pic.jpg'}" alt="Author" class="author-pic">
+              <div class="author-details">
+                <p class="author-name" href="user.html?userId=${data.authorId}">${authorData.name || 'Unknown Author'} in ${data.theme || 'No Topic'}</p>
+              </div>
+            </div>
+          </div>
+          <div class="article-body">
+            <div class="article-text">
+              <h2 class="article-title">${data.title || 'No Title'}</h2>
+              <p class="article-excerpt">${data.description ? data.description.substring(0, 400) + '...' : 'No content available.'}</p>
+              <span class="publish-date">${data.timestamp ? new Date(data.timestamp.seconds * 1000).toLocaleDateString() : 'Unknown Date'} | ${data.timeRead || 'Unknown Duration'} min read</span>
+            </div>
+            <!--<img src="${data.imageURL || 'No Image'}" class="article-image" style="width: 100%; max-height: 400px; object-fit: cover;">-->
+          </div>
+        </a>
+      `;
+
+      // Append article element to the container
+      articlesContainer.appendChild(articleElement);
+    }
+  } catch (error) {
+    console.error('Error loading articles: ', error);
+    document.getElementById('articles-container').innerHTML = '<p>Failed to load articles. Please try again later.</p>';
+  }
 }
 
 // Load articles on page load or when search query changes
 window.onload = () => {
   const urlParams = new URLSearchParams(window.location.search);
   const query = urlParams.get('search') || '';
-  loadArticles(query);
+  if (query) {
+    loadSearchedArticles(query);
+  } else {
+    loadAllArticles();
+  }
 };
 
 // Add event listener to search bar
