@@ -54,18 +54,40 @@
                     </div>
 
                     <div class="form-group">
-                        <textarea type="text" rows="2.5" id="description" name="description" placeholder="Short description about your story... " required></textarea>
+                        <textarea type="text" rows="2.5" id="description" name="description" placeholder="Story description... " required></textarea>
                     </div>
                     
                     <div class="form-group">
                         <textarea id="content" name="content" rows="2" placeholder="Tell your story..." required></textarea>
                     </div>
                     
-                    <button class="submit-button" type="submit">Publish</button>
+                    <button class="submit-button" type="submit" id="next-button">Next</button>
                 </form>
                 <div id="error-message" style="color: red;"></div>
             </main>
         </div>
+
+        <div id="popup-modal" class="popup-modal">
+            <img id="close-popup-modal" src="./assets/svgexport-14.svg">
+            <div class="popup-content">
+                <h2>Publishing to <p id="popup-content-h2"></p></h2>
+                <form id="publish-form">
+                    <!--<div class="form-group">
+                        <img id="image-preview" src="" alt="Image Preview" style="display: block;">
+                        <input type="file" id="image-upload" style="display: none;">
+                        <button type="button" id="upload-button" class="upload-button">Change Image</button>
+                    </div>-->
+                    <div class="form-group">
+                        <label for="theme">Add or change topic so readers know what your story is about</label>
+                        <!--<input type="text" id="theme" name="theme" placeholder="Add a topic..." autocomplete="off" required>-->
+                        <div id="tag-container" class="tag-container">
+                            <input type="text" id="theme" placeholder="Add a topic..." autocomplete="off">
+                        </div>
+                    </div>
+                    <button class="submit-button" type="submit" id="publish-button">Publish</button>
+                </form>
+            </div>
+        </div>               
     </div>
     
     <script src="https://www.gstatic.com/firebasejs/8.2.1/firebase-app.js"></script>
