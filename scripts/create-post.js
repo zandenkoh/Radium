@@ -13,6 +13,7 @@ const auth = firebase.auth();
 const firestore = firebase.firestore();
 const profilePic = document.getElementById('profile-pic');
 const userNameSpan = document.getElementById('user-name');
+const publishTo = document.getElementById('popup-content-h2');
 let currentUser = null;
 
 // Check authentication and fetch user data
@@ -32,6 +33,7 @@ const fetchUserProfile = (userId) => {
             const data = doc.data();
             console.log('User data fetched:', data);
             userNameSpan.textContent = data.name || 'User';
+            publishTo.textContent = data.name || 'User';
             if (data.profilePicture) {
                 profilePic.style.backgroundImage = `url(${data.profilePicture})`;
             } else {
@@ -53,23 +55,59 @@ function encodeText(text) {
                .replace(/_(.*?)_/g, '<i>$1</i>');      // Italic formatting
 }
 
+// Show the popup modal
+function showPopup() {
+    const popupModal = document.getElementById('popup-modal');
+    popupModal.style.display = 'block';
+}
+
+const closePopupModal = document.getElementById('close-popup-modal');
+closePopupModal.addEventListener('click', function(e) {
+    hidePopup();
+});
+
+// Hide the popup modal
+function hidePopup() {
+    const popupModal = document.getElementById('popup-modal');
+    popupModal.style.display = 'none';
+}
+
 document.getElementById('create-post-form').addEventListener('submit', function(e) {
     e.preventDefault();
-    
+    // Display the popup modal
+    document.getElementById('popup-modal').style.display = 'block';
+});
+
+document.getElementById('publish-form').addEventListener('submit', function(e) {
+    e.preventDefault();
+
+    const submitButton = e.target.querySelector('button[type="submit"]');
+    submitButton.disabled = true;
+    submitButton.textContent = 'Publishing...';
+    submitButton.classList.add('disabled');
+
     const title = document.getElementById('title').value;
     const description = document.getElementById('description').value;
     const content = encodeText(document.getElementById('content').value);
     const imageUrl = document.getElementById('image').value;
+    const theme = tagsArray.join(', ');
+
+    // Calculate reading time
+    const wordsPerMinute = 200; // Average reading speed
+    const wordCount = content.split(/\s+/).length;
+    const timeRead = Math.ceil(wordCount / wordsPerMinute);
 
     const user = firebase.auth().currentUser;
     if (user) {
         const postRef = firebase.firestore().collection('posts').doc();
         postRef.set({
             title: title,
-            description: description, // Add description field here
+            description: description,
             content: content,
             imageUrl: imageUrl || null,
             authorId: user.uid,
+            theme: theme,
+            timeRead: timeRead,
             timestamp: firebase.firestore.FieldValue.serverTimestamp()
         })
         .then(() => {
@@ -79,38 +117,43 @@ document.getElementById('create-post-form').addEventListener('submit', function(
         .catch((error) => {
             console.error('Error creating post:', error);
             document.getElementById('error-message').textContent = 'Error creating post: ' + error.message;
+            submitButton.disabled = false;
+            submitButton.textContent = 'Publish';
+            submitButton.classList.remove('disabled');
         });
     } else {
         document.getElementById('error-message').textContent = 'User not logged in';
+        submitButton.disabled = false;
+        submitButton.textContent = 'Publish';
+        submitButton.classList.remove('disabled');
     }
 });
 
 document.addEventListener('DOMContentLoaded', function() {
-    const textarea = document.getElementById('title');
-    const textarea2 = document.getElementById('content');
-    const textarea3 = document.getElementById('description');
-
+    const textareas = [document.getElementById('title'), document.getElementById('content'), document.getElementById('description')];
 
     // Function to auto-resize the textarea
-    function autoResize() {
+    function autoResize(event) {
+        const textarea = event.target;
+        const scrollPosition = window.scrollY;
+
         textarea.style.height = 'auto'; // Reset the height
         textarea.style.height = textarea.scrollHeight + 'px'; // Set the height to scroll height
-        textarea2.style.height = 'auto'; // Reset the height
-        textarea2.style.height = textarea2.scrollHeight + 'px'; // Set the height to scroll height
-        textarea3.style.height = 'auto'; // Reset the height
-        textarea3.style.height = textarea3.scrollHeight + 'px'; // Set the height to scroll height
+
+        window.scrollTo(0, scrollPosition); // Restore the scroll position
     }
 
     // Event listeners to handle input and change events
-    textarea.addEventListener('input', autoResize);
-    textarea.addEventListener('change', autoResize);
-    textarea2.addEventListener('input', autoResize);
-    textarea2.addEventListener('change', autoResize);
-    textarea3.addEventListener('input', autoResize);
-    textarea3.addEventListener('change', autoResize);
+    textareas.forEach(textarea => {
+        textarea.addEventListener('input', autoResize);
+        textarea.addEventListener('change', autoResize);
+    });
 
     // Initial resize to fit existing content
-    autoResize();
+    textareas.forEach(textarea => {
+        const event = new Event('input', { bubbles: true });
+        textarea.dispatchEvent(event);
+    });
 });
 
 document.addEventListener('DOMContentLoaded', function() {
@@ -133,4 +176,56 @@ document.addEventListener('DOMContentLoaded', function() {
             textarea.selectionStart = textarea.selectionEnd = start + spaces.length;
         }
     });
+});
+
+const input = document.getElementById('theme');
+const container = document.getElementById('tag-container');
+let tagsArray = []; // Array to store tags
+
+// Function to create a tag element
+function createTag(text) {
+    const tag = document.createElement('div');
+    tag.classList.add('tag');
+    tag.textContent = text;
+
+    const removeButton = document.createElement('button');
+    removeButton.textContent = '×';
+    removeButton.onclick = function () {
+        container.removeChild(tag);
+        // Remove the tag from the tagsArray
+        tagsArray = tagsArray.filter(tagText => tagText !== text);
+        updateThemeField(); // Update the theme field when a tag is removed
+    };
+
+    tag.appendChild(removeButton);
+    return tag;
+}
+
+// Function to update the theme field with comma-separated tags
+function updateThemeField() {
+    input.value = ''; // Clear the input field
+}
+
+// Event listener for the input field
+input.addEventListener('keydown', function (event) {
+    if (event.key === 'Enter') {
+        event.preventDefault(); // Prevent default form submission behavior
+
+        const text = input.value.trim();
+        if (text && !tagsArray.includes(text)) {
+            // Add new tag to the tagsArray
+            tagsArray.push(text);
+            // Create and append a new tag
+            const tag = createTag(text);
+            container.insertBefore(tag, input);
+            input.value = ''; // Clear the input field
+        }
+    }
+});
+
+// Optional: allow for tag removal by clicking outside the tag input
+document.addEventListener('click', function (event) {
+    if (!container.contains(event.target) && event.target !== input) {
+        input.focus();
+    }
 });
