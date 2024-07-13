@@ -169,6 +169,8 @@ const displayArticle = async () => {
             if (doc.exists) {
                 const data = doc.data();
                 const articleTitle = data.title || 'Untitled';
+                const imageElement = document.getElementById('article-image');
+                imageElement.src = data.imageUrl;
 
                 // Set the title of the document
                 document.title = articleTitle + " | Radium";
