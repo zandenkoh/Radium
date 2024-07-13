@@ -326,7 +326,7 @@ button.disabled {
     width: 60vw;
     height: 60vh;
     left: 20vw;
-    top: 25vh;
+    top: 20vh;
     text-align: center;
     border-radius: 5px;
     z-index: 2;
@@ -349,7 +349,7 @@ button.disabled {
 }
 
 .popup-content .form-group {
-    margin-top: 30px;
+    margin-top: 20px;
 }
 
 .popup-content .form-group label {
@@ -359,7 +359,18 @@ button.disabled {
     font-weight: 300;
 }
 
-.popup-content .form-group input {
+.popup-content .form-group #image {
+    width: 60%;
+    padding: 16.5px 19px;
+    font-size: 15px;
+    border: none;
+    border-radius: 7px;
+    background: #f0f0f0;
+    outline: none;
+    margin-top: 10px;
+}
+
+.popup-content .form-group #theme {
     /*width: 60%;
     padding: 10px 15px;
     font-size: 16px;
@@ -388,7 +399,7 @@ button.disabled {
     align-items: center;
 
     width: 60%;
-    padding: 10px 15px;
+    padding: 8px 10px;
     font-size: 16px;
     border: none;
     border-radius: 7px;
@@ -401,9 +412,10 @@ button.disabled {
     align-items: center;
     background-color: #fff;
     color: #000;
-    padding: 5px 10px;
+    padding: 2px 10px;
     border-radius: 3px;
     font-size: 14px;
+    user-select: none;
 }
 .tag button {
     background: none;
@@ -412,7 +424,7 @@ button.disabled {
     cursor: pointer;
     margin-left: 10px;
     font-size: 17px;
-    margin-top: 4px;
+    margin-top: 3.5px;
 }
 
 
