@@ -177,8 +177,46 @@ button:hover {
 
 
 
+
+.tabs {
+    display: flex;
+    gap: 10px;
+    margin-top: 100px;
+    margin-left: 160px;
+    position: sticky;
+    top: 10px;
+}
+
+.tab {
+    padding: 10px 20px;
+    background-color: #f0f0f0;
+    color: #000;
+    border: none;
+    cursor: pointer;
+    border-radius: 50px;
+    font-weight: 100;
+}
+
+#topic-tabs button {
+    margin-right: 10px;
+}
+
+.tab:hover {
+    background-color: #dedede;
+}
+
+.tab.active {
+    background-color: #000;
+    font-weight: 100;
+    color: #fff;
+}
+
+
+
+
+
 #articles-container {
-    padding: 0 80px;
+    padding: 0 140px;
 }
 
 .article {
@@ -249,12 +287,16 @@ button:hover {
     flex-direction: row;
     align-items: flex-start;
     width: 100%;
+    justify-content: normal;
+    gap: initial;
 }
 
 .article-text {
-    flex: 1;
-    margin-right: 20px;
-    width: 50%;
+    /*flex: 1;*/
+    flex: 0 1 auto;
+    margin-right: auto;
+    width: 65%;
+    margin-right: 30px;
 }
 
 .article-title {
@@ -265,6 +307,7 @@ button:hover {
     color: #000;
     font-weight: 900;
     letter-spacing: -0.5px;
+    min-width: 100%;
 }
 
 .article-excerpt {
@@ -274,14 +317,20 @@ button:hover {
     color: #434343;
     line-height: 24px;
     margin-bottom: 10px;
+    width: 100%;
 }
 
 .article-image {
-    position: absolute;
-    right: 0;
-    max-width: 250px;
+    position: relative;
+    width: 300px;
     height: auto;
     border-radius: 5px;
+    flex: 0 1 auto; /* Element 2 will take only as much space as it needs */
+    aspect-ratio: 1.9/1;
+    flex-shrink: 1;
+    object-position: center;
+    object-fit: cover;
+    background-repeat: no-repeat;
 }
 
 
