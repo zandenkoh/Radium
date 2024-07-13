@@ -1,3 +1,4 @@
+
 // Initialize Firebase
 const firebaseConfig = {
   apiKey: "AIzaSyBsG6KOqNFSmgmW5FFdEdnvIegKYFdaFko",
@@ -184,10 +185,10 @@ async function loadAllArticles() {
           <div class="article-body">
             <div class="article-text">
               <h2 class="article-title">${data.title || 'No Title'}</h2>
-              <p class="article-excerpt">${data.description ? data.description.substring(0, 400) + '...' : 'No content available.'}</p>
+              <p class="article-excerpt">${data.description ? data.description.substring(0, 300) + '...' : 'No content available.'}</p>
               <span class="publish-date">${data.timestamp ? new Date(data.timestamp.seconds * 1000).toLocaleDateString('en-GB', { month: 'long', day: 'numeric', year: 'numeric' }) : 'Unknown Date'} • ${data.timeRead || 'Unknown number of'} min read</span>
             </div>
-            <!--<img src="${data.imageURL || 'No Image'}" class="article-image" style="width: 100%; max-height: 400px; object-fit: cover;">-->
+            <img src="${data.imageUrl || 'https://www.impactmania.com/wp-content/themes/cardinal/images/default-thumb.png'}" class="article-image" style="object-fit: cover;">
           </div>
         </a>
       `;
@@ -268,7 +269,7 @@ async function loadSearchedArticles(query) {
               <p class="article-excerpt">${data.description ? data.description.substring(0, 400) + '...' : 'No content available.'}</p>
               <span class="publish-date">${data.timestamp ? new Date(data.timestamp.seconds * 1000).toLocaleDateString() : 'Unknown Date'} | ${data.timeRead || 'Unknown Duration'} min read</span>
             </div>
-            <!--<img src="${data.imageURL || 'No Image'}" class="article-image" style="width: 100%; max-height: 400px; object-fit: cover;">-->
+            <!--<img src="${data.imageURL || 'https://www.impactmania.com/wp-content/themes/cardinal/images/default-thumb.png'}" class="article-image" style="width: 100%; max-height: 400px; object-fit: cover;">-->
           </div>
         </a>
       `;
