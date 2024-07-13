@@ -44,12 +44,19 @@
                     <input type="text" id="search-input" placeholder="Search...">
                 </div>
             </header>-->
+
+            <div style="display: none;" class="tabs">
+                <button class="tab" id="add-topic-tab">+</button>
+                <button class="tab" id="for-you-tab">For You</button>
+                <div id="topic-tabs"></div>
+            </div>
             
             <main>
                 <h1 style="display: none;" id="welcome-message">Welcome</h1>
                 <div id="articles-container">
                     <!-- Articles will be dynamically inserted here -->
                 </div>
+                <div id="load-more-trigger"></div>
             </main>
         </div>
     </div>
