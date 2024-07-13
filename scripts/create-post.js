@@ -104,7 +104,7 @@ document.getElementById('publish-form').addEventListener('submit', function(e) {
             title: title,
             description: description,
             content: content,
-            imageUrl: imageUrl || null,
+            imageUrl: imageUrl,
             authorId: user.uid,
             theme: theme,
             timeRead: timeRead,
@@ -222,10 +222,11 @@ input.addEventListener('keydown', function (event) {
         }
     }
 });
-
+/*
 // Optional: allow for tag removal by clicking outside the tag input
 document.addEventListener('click', function (event) {
     if (!container.contains(event.target) && event.target !== input) {
+        imageInput.focus();
         input.focus();
     }
-});
+});*/
