@@ -15,7 +15,7 @@
             <div class="profile-image-section">
                 <img id="profile-image" src="" alt="Your Profile Image" class="profile-image">
                 <button id="change-image-btn">Upload Your Image</button>
-                <input type="file" id="image-upload" style="display: none;">
+                <input type="file" id="image-upload" style="display: none;" required>
             </div>
             
             <!-- Right Side -->
@@ -30,16 +30,18 @@
                 </div>
                 <div id="profile-bio-container">
                     <label for="profile-bio">Bio:</label>
-                    <textarea id="profile-bio" placeholder="Enter a short bio"></textarea>
+                    <textarea id="profile-bio" placeholder="Enter a short bio" required></textarea>
                 </div>
-                <div id="edit-options" style="display: none;">
+                <!--<div id="edit-options" style="display: none;">
                     <button id="save-btn">Save</button>
                     <button id="cancel-btn">Cancel</button>
-                </div>
+                </div>-->
                 <button id="next-btn">Save</button>
             </div>
+            <p id="please-ensure">Ensure that you have uploaded a profile picture, created a username and written your bio.</p>
         </div>
     </div>
+
 
     <script src="https://www.gstatic.com/firebasejs/8.2.1/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.2.1/firebase-auth.js"></script>
