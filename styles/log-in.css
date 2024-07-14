@@ -1,3 +1,24 @@
+header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background: #fff;
+    box-shadow: none;
+    border: none;
+    text-align: center;
+    padding-top: 20px;
+    user-select: none;
+}
+
+header img {
+    width: 35px;
+    height: 35px;
+    margin-left: calc(50% - 17.5px);
+    -webkit-user-drag: none;
+    border-radius: 6px;
+}
+
 main {
     position: fixed;
     top: 50%;
@@ -40,7 +61,7 @@ form input {
     padding: 15px;
     margin-top: 10px;
     border: 1px solid #ccc;
-    border-radius: 2px;
+    border-radius: 6px;
     width: 310px;
 }
 
@@ -55,7 +76,7 @@ form button {
     border: none;
     background-color: #0fa37f;
     color: #fff;
-    border-radius: 2px;
+    border-radius: 6px;
     cursor: pointer;
     user-select: none;
 }
