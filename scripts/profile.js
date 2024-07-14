@@ -120,6 +120,7 @@ cancelBtn.addEventListener('click', () => {
 });
 */
 
+
 // Initialize Firebase
 const firebaseConfig = {
     apiKey: "AIzaSyBsG6KOqNFSmgmW5FFdEdnvIegKYFdaFko",
@@ -168,10 +169,11 @@ const fetchUserProfile = (userId) => {
             profileBioInput.value = data.bio || '';
             if (data.profilePicture) {
                 profileImage.src = data.profilePicture;
+                changeImageBtn.textContent = 'Change your image'
             }
             // Show edit button if profile exists
-            editBtn.style.display = 'inline-block';
-            nextBtn.style.display = 'none';
+            //editBtn.style.display = 'inline-block';
+            nextBtn.style.display = 'block';
         } else {
             // Show profile setup form if no profile exists
             setupProfile();
@@ -180,14 +182,14 @@ const fetchUserProfile = (userId) => {
         console.error('Error fetching profile:', error);
     });
 };
-
+/*
 // Setup profile form for initial setup
 const setupProfile = () => {
     document.getElementById('edit-options').style.display = 'none'; // Hide edit options initially
     editBtn.style.display = 'none'; // Hide edit button during setup
     saveBtn.style.display = 'inline-block'; // Show save button during setup
     cancelBtn.style.display = 'inline-block'; // Show cancel button during setup
-};
+};*/
 
 // Handle image upload
 changeImageBtn.addEventListener('click', () => {
@@ -230,13 +232,36 @@ const saveProfileData = (updates) => {
         });
     }
 };
-
-// Handle Next button click
+/*
 nextBtn.addEventListener('click', () => {
+    
     saveProfileData({});
     window.location.href = 'index.html';
+}); */
+const pleaseEnsure = document.getElementById('please-ensure');
+
+nextBtn.addEventListener('click', () => {
+    if (validateProfile()) {
+        saveProfileData({});
+        window.location.href = 'index.html';
+    } else {
+        pleaseEnsure.style.opacity = '1';
+        pleaseEnsure.style.bottom = '-20px';
+        //alert('Please complete your setup before proceeding. Ensure that you have uploaded a profile picture, created a username and written your bio.');
+    }
 });
 
+// Validate profile completion
+const validateProfile = () => {
+    const isValid = profileNameInput.value.trim() !== '' && profileBioInput.value.trim() !== '';
+    nextBtn.disabled = !isValid;
+    return isValid;
+};
+
+profileNameInput.addEventListener('input', validateProfile);
+profileBioInput.addEventListener('input', validateProfile);
+
+/*
 // Edit mode
 editBtn.addEventListener('click', () => {
     profileNameInput.disabled = false;
@@ -259,4 +284,4 @@ cancelBtn.addEventListener('click', () => {
     profileBioInput.disabled = true;
     document.getElementById('edit-options').style.display = 'none';
     nextBtn.style.display = 'inline-block';
-});
+});*/
