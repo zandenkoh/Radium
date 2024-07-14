@@ -153,7 +153,7 @@ header {
 }
 
 #change-image-btn {
-    margin-top: 10px;
+    margin-top: 0;
     padding: 12px 40px;
     border-radius: 50px;
     color: #797979;
@@ -161,7 +161,7 @@ header {
     font-weight: 600;
     background: #ffffff;
     position: absolute;
-    bottom: 37.5px;
+    bottom: 42px;
     transition: 0.2s ease;
 }
 
@@ -306,4 +306,15 @@ i {
     cursor: pointer;
     color: #454545;
     border: 2px solid #454545;
+}
+
+#please-ensure {
+    position: absolute;
+    bottom: -30px;
+    width: 100%;
+    text-align: center;
+    display: block;
+    user-select: none;
+    color: #757575;
+
 }
