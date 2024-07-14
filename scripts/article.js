@@ -169,14 +169,16 @@ const displayArticle = async () => {
             if (doc.exists) {
                 const data = doc.data();
                 const articleTitle = data.title || 'Untitled';
+                const articleTopic = data.theme || 'No topic';
                 const imageElement = document.getElementById('article-image');
-                imageElement.src = data.imageUrl;
+                imageElement.src = data.imageUrl || 'https://www.impactmania.com/wp-content/themes/cardinal/images/default-thumb.png';
 
                 // Set the title of the document
                 document.title = articleTitle + " | Radium";
 
                 // Set the article title and content
                 document.getElementById('article-title').textContent = articleTitle;
+                document.getElementById('article-topic').textContent = articleTopic;
                 document.getElementById('article-content').innerHTML = decodeAndFormatContent(data.content);
 
                 // Fetch the author's information
@@ -186,6 +188,7 @@ const displayArticle = async () => {
                     const authorName = authorData.name || 'Unknown Author';
                     const profilePicture = authorData.profilePicture || './assets/default-profile-pic.jpg';
                     const publishDate = data.timestamp ? new Date(data.timestamp.seconds * 1000).toLocaleDateString() : 'Unknown Date';
+                    
 
                     // Create the author info section
                     const authorInfoHtml = `
