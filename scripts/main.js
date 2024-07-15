@@ -1,4 +1,3 @@
-
 // Initialize Firebase
 const firebaseConfig = {
   apiKey: "AIzaSyBsG6KOqNFSmgmW5FFdEdnvIegKYFdaFko",
@@ -14,6 +13,7 @@ firebase.initializeApp(firebaseConfig);
 const auth = firebase.auth();
 const firestore = firebase.firestore();
 const profilePic = document.getElementById('profile-pic');
+const profileMobilePic = document.getElementById('profile-mobile-pic');
 const userNameSpan = document.getElementById('user-name');
 const welcomeMessage = document.getElementById('welcome-message');
 let currentUser = null;
@@ -21,10 +21,11 @@ let currentUser = null;
 // Check authentication and fetch user data
 auth.onAuthStateChanged((user) => {
   if (user) {
-    currentUser = user;
-    fetchUserProfile(user.uid); // Pass user ID here
+      currentUser = user;
+      fetchUserProfile(user.uid); // Pass user ID here
+      loadArticlesByFilter('all');
   } else {
-    window.location.href = 'log-in.html'; // Redirect if not authenticated
+      window.location.href = 'log-in.html'; // Redirect if not authenticated
   }
 });
 
@@ -34,270 +35,163 @@ const loadingBar = document.getElementById('loading-bar');
 let progress = 0;
 
 const updateProgress = (increment) => {
-    progress += increment;
-    loadingBar.style.width = `${progress}%`;
-    if (progress >= 100) {
-        setTimeout(() => {
-            loadingScreen.style.display = 'none';
-        }, 1500); // Delay slightly more than the transition duration
-    }
+  progress += increment;
+  loadingBar.style.width = `${progress}%`;
+  if (progress >= 100) {
+      setTimeout(() => {
+          loadingScreen.style.display = 'none';
+      }, 1500); // Delay slightly more than the transition duration
+  }
 };
 
 // Fetch user profile from Firestore
 const fetchUserProfile = (userId) => {
   firestore.collection('users').doc(userId).get().then((doc) => {
-    if (doc.exists) {
-      const data = doc.data();
-      console.log('User data fetched:', data);
-      userNameSpan.textContent = data.name || 'User';
-      welcomeMessage.textContent = `Welcome, ${data.name || 'User'}!`;
-      if (data.profilePicture) {
-        profilePic.style.backgroundImage = `url(${data.profilePicture})`;
+      if (doc.exists) {
+          const data = doc.data();
+          console.log('User data fetched:', data);
+          userNameSpan.textContent = data.name || 'User';
+          welcomeMessage.textContent = `Welcome, ${data.name || 'User'}!`;
+          if (data.profilePicture) {
+              profilePic.style.backgroundImage = `url(${data.profilePicture})`;
+              profileMobilePic.style.backgroundImage = `url(${data.profilePicture})`;
+          } else {
+              profilePic.style.backgroundImage = 'url(https://i.pinimg.com/474x/81/8a/1b/818a1b89a57c2ee0fb7619b95e11aebd.jpg)'; // Placeholder image if none exists
+              profileMobilePic.style.backgroundImage = 'url(https://i.pinimg.com/474x/81/8a/1b/818a1b89a57c2ee0fb7619b95e11aebd.jpg)'; // Placeholder image if none exists
+          }
+          updateProgress(100);
       } else {
-        profilePic.style.backgroundImage = 'url(default-profile-pic.jpg)'; // Placeholder image if none exists
+          console.log('No such document!');
+          updateProgress(50);
       }
-      updateProgress(100);
-    } else {
-      console.log('No such document!');
-      updateProgress(50);
-    }
   }).catch((error) => {
-    console.log('Error getting document:', error);
-    updateProgress(50);
+      console.log('Error getting document:', error);
+      updateProgress(50);
   });
 };
 
 // Initialize Firestore
 const db = firebase.firestore();
-/*
-// Function to load articles
-async function loadArticles(query = '') {
+
+let lastVisible = null;
+let loading = false;
+
+// Function to load articles based on filter with pagination
+async function loadArticlesByFilter(filter) {
+  if (loading) return;
+  loading = true;
+
   try {
-    const articlesContainer = document.getElementById('articles-container');
-    let snapshot;
+      const articlesContainer = document.getElementById('articles-container');
+      let query = db.collection('posts').orderBy('timestamp', 'desc').limit(5);
 
-    if (query) {
-      // Split the query into lowercase keywords
-      const keywords = query.toLowerCase().split(' ');
+      if (filter !== 'all') {
+          query = query.where('theme', '==', filter);
+      }
 
-      // Fetch articles where any search keyword matches and order by timestamp
-      snapshot = await db.collection('posts')
-        .where('searchKeywords', 'array-contains-any', keywords)
-        .orderBy('timestamp', 'desc')
-        .get();
-    } else {
-      // Fetch all articles if no query is provided and order by timestamp
-      snapshot = await db.collection('posts')
-        .orderBy('timestamp', 'desc')
-        .get();
-    }
+      if (lastVisible) {
+          query = query.startAfter(lastVisible);
+      }
 
-    if (snapshot.empty) {
-      articlesContainer.innerHTML = '<p>No articles available.</p>';
-      return;
-    }
+      const snapshot = await query.get();
 
-    // Clear any existing content
-    articlesContainer.innerHTML = '';
+      if (snapshot.empty) {
+          if (!lastVisible) {
+              articlesContainer.innerHTML = '<p>No articles available.</p>';
+          }
+          return;
+      }
 
-    // Fetch and display articles
-    for (const doc of snapshot.docs) {
-      const data = doc.data();
+      // Update the last visible document
+      lastVisible = snapshot.docs[snapshot.docs.length - 1];
 
-      // Fetch author profile
-      const authorDoc = await firestore.collection('users').doc(data.authorId).get();
-      const authorData = authorDoc.data() || {};
+      // Fetch and display articles
+      snapshot.forEach(async (doc) => {
+          const data = doc.data();
 
-      // Create article element
-      const articleElement = document.createElement('article');
-      articleElement.classList.add('article');
+          // Fetch author profile
+          const authorDoc = await firestore.collection('users').doc(data.authorId).get();
+          const authorData = authorDoc.data() || {};
 
-      // Log data for debugging
-      console.log('Article Data:', data);
+          // Create article element
+          const articleElement = document.createElement('article');
+          articleElement.classList.add('article');
 
-      // Generate HTML for the article
-      articleElement.innerHTML = `
-        <a href="article.html?id=${doc.id}" class="article-link">
-          <div class="article-header">
-            <div class="author-info">
-              <img src="${authorData.profilePicture || './assets/default-profile-pic.jpg'}" alt="Author" class="author-pic">
-              <div class="author-details">
-                <p class="author-name" href="user.html?userId=${data.authorId}">${authorData.name || 'Unknown Author'}</p>
-              </div>
-            </div>
-          </div>
-          <div class="article-body">
-            <div class="article-text">
-              <h2 class="article-title">${data.title || 'No Title'}</h2>
-              <p class="article-excerpt">${data.description ? data.description.substring(0, 400) + '...' : 'No content available.'}</p>
-              <span class="publish-date">${data.timestamp ? new Date(data.timestamp.seconds * 1000).toLocaleDateString() : 'Unknown Date'}</span>
-            </div>
-            <!--<img src="${data.imageURL || 'No Image'}" class="article-image" style="width: 100%; max-height: 400px; object-fit: cover;">-->
-          </div>
-        </a>
-      `;
+          // Generate HTML for the article
+          articleElement.innerHTML = `
+              <a href="article.html?id=${doc.id}" class="article-link">
+                  <div class="article-header">
+                      <div class="author-info">
+                          <img src="${authorData.profilePicture || './assets/default-profile-pic.jpg'}" alt="Author" class="author-pic">
+                          <div class="author-details">
+                              <p class="author-name" href="user.html?userId=${data.authorId}"><b>${authorData.name || 'Unknown Author'}</b> in <b>${data.theme || 'Topic'}</b></p>
+                          </div>
+                      </div>
+                  </div>
+                  <div class="article-body">
+                      <div class="article-text">
+                          <h2 class="article-title">${data.title || 'No Title'}</h2>
+                          <p class="article-excerpt">${data.description ? data.description.substring(0, 125) + '...' : 'No content available.'}</p>
+                          <span class="publish-date">${data.timestamp ? new Date(data.timestamp.seconds * 1000).toLocaleDateString('en-GB', { month: 'long', day: 'numeric', year: 'numeric' }) : 'Unknown Date'} • ${data.timeRead || 'Unknown number of'} min read</span>
+                      </div>
+                      <img src="${data.imageUrl || 'https://www.impactmania.com/wp-content/themes/cardinal/images/default-thumb.png'}" class="article-image" style="object-fit: cover;">
+                  </div>
+              </a>
+          `;
 
-      // Append article element to the container
-      articlesContainer.appendChild(articleElement);
-    }
+          // Append article element to the container
+          articlesContainer.appendChild(articleElement);
+      });
   } catch (error) {
-    console.error('Error loading articles: ', error);
-    document.getElementById('articles-container').innerHTML = '<p>Failed to load articles. Please try again later.</p>';
-  }
-}*/
-// Function to load all articles
-async function loadAllArticles() {
-  try {
-    const articlesContainer = document.getElementById('articles-container');
-    const snapshot = await db.collection('posts').orderBy('timestamp', 'desc').get();
-
-    if (snapshot.empty) {
-      articlesContainer.innerHTML = '<p>No articles available.</p>';
-      return;
-    }
-
-    // Clear any existing content
-    articlesContainer.innerHTML = '';
-
-    // Fetch and display articles
-    for (const doc of snapshot.docs) {
-      const data = doc.data();
-
-      // Fetch author profile
-      const authorDoc = await firestore.collection('users').doc(data.authorId).get();
-      const authorData = authorDoc.data() || {};
-
-      // Create article element
-      const articleElement = document.createElement('article');
-      articleElement.classList.add('article');
-
-      // Generate HTML for the article
-      articleElement.innerHTML = `
-        <a href="article.html?id=${doc.id}" class="article-link">
-          <div class="article-header">
-            <div class="author-info">
-              <img src="${authorData.profilePicture || './assets/default-profile-pic.jpg'}" alt="Author" class="author-pic">
-              <div class="author-details">
-                <p class="author-name" href="user.html?userId=${data.authorId}"><b>${authorData.name || 'Unknown Author'}</b> in <b>${data.theme || 'Topic'}</b></p>
-              </div>
-            </div>
-          </div>
-          <div class="article-body">
-            <div class="article-text">
-              <h2 class="article-title">${data.title || 'No Title'}</h2>
-              <p class="article-excerpt">${data.description ? data.description.substring(0, 300) + '...' : 'No content available.'}</p>
-              <span class="publish-date">${data.timestamp ? new Date(data.timestamp.seconds * 1000).toLocaleDateString('en-GB', { month: 'long', day: 'numeric', year: 'numeric' }) : 'Unknown Date'} • ${data.timeRead || 'Unknown number of'} min read</span>
-            </div>
-            <img src="${data.imageUrl || 'https://www.impactmania.com/wp-content/themes/cardinal/images/default-thumb.png'}" class="article-image" style="object-fit: cover;">
-          </div>
-        </a>
-      `;
-
-      // Append article element to the container
-      articlesContainer.appendChild(articleElement);
-    }
-  } catch (error) {
-    console.error('Error loading articles: ', error);
-    document.getElementById('articles-container').innerHTML = '<p>Failed to load articles. Please try again later.</p>';
+      console.error('Error loading articles: ', error);
+      document.getElementById('articles-container').innerHTML = '<p>Failed to load articles. Please try again later.</p>';
+  } finally {
+      loading = false;
   }
 }
 
-function preprocessKeywords(title, description) {
-  const titleKeywords = title.toLowerCase().split(' ');
-  const descriptionKeywords = description.toLowerCase().split(' ');
-  const keywords = [...new Set([...titleKeywords, ...descriptionKeywords])]; // Remove duplicates
-  return keywords;
-}
-
-async function saveArticle(articleData) {
-  const keywords = preprocessKeywords(articleData.title, articleData.description);
-  await db.collection('posts').add({
-    ...articleData,
-    keywords: keywords
-  });
-}
-
-async function loadSearchedArticles(query) {
-  try {
-    const articlesContainer = document.getElementById('articles-container');
-    const keywords = query.toLowerCase().split(' ');
-
-    let combinedResults = new Set();
-
-    for (const keyword of keywords) {
-      // Search for exact matches in the keywords array
-      const keywordSnapshot = await db.collection('posts').where('keywords', 'array-contains', keyword).get();
-      keywordSnapshot.forEach(doc => combinedResults.add(doc));
-    }
-
-    const querySnapshot = Array.from(combinedResults);
-
-    if (querySnapshot.length === 0) {
-      articlesContainer.innerHTML = '<p>No articles found matching the search criteria.</p>';
-      return;
-    }
-
-    // Clear any existing content
-    articlesContainer.innerHTML = '';
-
-    // Fetch and display articles
-    for (const doc of querySnapshot) {
-      const data = doc.data();
-
-      // Fetch author profile
-      const authorDoc = await firestore.collection('users').doc(data.authorId).get();
-      const authorData = authorDoc.data() || {};
-
-      // Create article element
-      const articleElement = document.createElement('article');
-      articleElement.classList.add('article');
-
-      // Generate HTML for the article
-      articleElement.innerHTML = `
-        <a href="article.html?id=${doc.id}" class="article-link">
-          <div class="article-header">
-            <div class="author-info">
-              <img src="${authorData.profilePicture || './assets/default-profile-pic.jpg'}" alt="Author" class="author-pic">
-              <div class="author-details">
-                <p class="author-name" href="user.html?userId=${data.authorId}">${authorData.name || 'Unknown Author'} in ${data.theme || 'No Topic'}</p>
-              </div>
-            </div>
-          </div>
-          <div class="article-body">
-            <div class="article-text">
-              <h2 class="article-title">${data.title || 'No Title'}</h2>
-              <p class="article-excerpt">${data.description ? data.description.substring(0, 400) + '...' : 'No content available.'}</p>
-              <span class="publish-date">${data.timestamp ? new Date(data.timestamp.seconds * 1000).toLocaleDateString() : 'Unknown Date'} | ${data.timeRead || 'Unknown Duration'} min read</span>
-            </div>
-            <!--<img src="${data.imageURL || 'https://www.impactmania.com/wp-content/themes/cardinal/images/default-thumb.png'}" class="article-image" style="width: 100%; max-height: 400px; object-fit: cover;">-->
-          </div>
-        </a>
-      `;
-
-      // Append article element to the container
-      articlesContainer.appendChild(articleElement);
-    }
-  } catch (error) {
-    console.error('Error loading articles: ', error);
-    document.getElementById('articles-container').innerHTML = '<p>Failed to load articles. Please try again later.</p>';
-  }
-}
-
-// Load articles on page load or when search query changes
-window.onload = () => {
-  const urlParams = new URLSearchParams(window.location.search);
-  const query = urlParams.get('search') || '';
-  if (query) {
-    loadSearchedArticles(query);
-  } else {
-    loadAllArticles();
-  }
-};
-
-// Add event listener to search bar
-document.getElementById('search-input').addEventListener('keypress', (e) => {
-  if (e.key === 'Enter') {
-    const query = e.target.value;
-    window.location.href = `index.html?search=${encodeURIComponent(query)}`;
+// Intersection observer for lazy loading
+const loadMoreTrigger = document.getElementById('load-more-trigger');
+const observer = new IntersectionObserver((entries) => {
+  if (entries[0].isIntersecting && !loading) {
+      const activeTab = document.querySelector('.tab.active').getAttribute('data-filter');
+      loadArticlesByFilter(activeTab);
   }
 });
+
+observer.observe(loadMoreTrigger);
+
+document.addEventListener('DOMContentLoaded', () => {
+  const tabs = document.querySelectorAll('.tab');
+
+  // Update tabs based on URL parameters
+  const urlParams = new URLSearchParams(window.location.search);
+  const activeTab = urlParams.get('tabId') || 'all'; // Default to 'all' if no tabId is specified
+  updateActiveTab(activeTab);
+
+  // Add click event listeners to tabs
+  tabs.forEach(tab => {
+      tab.addEventListener('click', () => {
+          const filter = tab.textContent.toLowerCase();
+          window.history.pushState({}, '', `index.html?tabId=${encodeURIComponent(filter)}`);
+          updateActiveTab(filter);
+          lastVisible = null; // Reset pagination
+          document.getElementById('articles-container').innerHTML = ''; // Clear existing articles
+          loadArticlesByFilter(filter); // Load articles based on selected filter
+      });
+  });
+
+  // Initial load based on URL filter
+  loadArticlesByFilter(activeTab);
+});
+
+const updateActiveTab = (filter) => {
+  const tabs = document.querySelectorAll('.tab');
+  tabs.forEach(tab => {
+      if (tab.textContent.toLowerCase() === filter) {
+          tab.classList.add('active');
+      } else {
+          tab.classList.remove('active');
+      }
+  });
+};
