@@ -32,8 +32,6 @@ const profileContent = document.getElementById('profile-content');
 const profileAbout = document.getElementById('user-about');
 const overlay = document.getElementById('overlay');
 const articleWritten = document.getElementById('article-user');
-
-let userId;
 /*
 // Fetch user data on page load
 auth.onAuthStateChanged(user => {
@@ -42,6 +40,24 @@ auth.onAuthStateChanged(user => {
         fetchUserProfile();
     }
 });*/
+
+const loadingScreen = document.getElementById('loading-screen');
+const loadingBar = document.getElementById('loading-bar');
+
+let progress = 0;
+
+const updateProgress = (increment) => {
+    progress += increment;
+    loadingBar.style.width = `${progress}%`;
+    if (progress >= 100) {
+        setTimeout(() => {
+            loadingScreen.style.display = 'none';
+        }, 1500); // Delay slightly more than the transition duration
+    }
+};
+
+let userId;
+
 document.addEventListener('DOMContentLoaded', () => {
     auth.onAuthStateChanged(user => {
         if (user) {
@@ -62,7 +78,7 @@ function fetchUserProfile() {
                 largeName.textContent = data.name || 'Anonymous';
                 document.title = data.name + ' | Radium' || 'Anonymous';
                 profileNameSpan.textContent = data.name || 'No Name';
-                articleWritten.textContent = 'Articles written by ' + data.name || 'Anonymous';
+                articleWritten.textContent = 'Written by ' + data.name || 'Anonymous';
                 profileEmailSpan.textContent = auth.currentUser.email || 'No Email';
                 profileBioP.textContent = data.bio || 'No Bio';
                 profileAbout.textContent = data.bio || 'No Bio';
@@ -78,10 +94,12 @@ function fetchUserProfile() {
                     largePic.style.backgroundImage = 'url(https://i.pinimg.com/474x/81/8a/1b/818a1b89a57c2ee0fb7619b95e11aebd.jpg)';
                     userBanner.style.backgroundImage = 'url(https://i.pinimg.com/474x/81/8a/1b/818a1b89a57c2ee0fb7619b95e11aebd.jpg)';
                 }
+                updateProgress(100);
             }
         })
         .catch(error => {
             console.error('Error fetching user profile:', error);
+            updateProgress(50);
         });
 }
 
@@ -166,8 +184,8 @@ cancelBtn.addEventListener('click', () => toggleEditMode(false));
 }
 */
 
-const MAX_NAME_WORDS = 3; // Adjust the max word count for the name as needed
-const MAX_BIO_WORDS = 50; // Adjust the max word count for the bio as needed
+//const MAX_NAME_WORDS = 3; // Adjust the max word count for the name as needed
+//const MAX_BIO_WORDS = 50; // Adjust the max word count for the bio as needed
 
 function toggleEditMode(isEditing) {
     if (isEditing) {
@@ -181,21 +199,23 @@ function toggleEditMode(isEditing) {
         profileNameInput.value = profileNameSpan.textContent;
         profileNameInput.placeholder = 'Enter new name';
         profileNameInput.style.fontSize = '15px';
+        profileNameInput.maxLength = 20;
         profileNameSpan.parentElement.appendChild(profileNameInput);
 
         const profileBioInput = document.createElement('textarea');
         profileBioInput.id = 'profile-bio-input';
         profileBioInput.value = profileBioP.textContent;
         profileBioInput.placeholder = 'Enter new bio';
+        profileBioInput.maxLength = 200;
         profileBioP.parentElement.appendChild(profileBioInput);
 
-        profileNameInput.addEventListener('input', () => {
+        /*profileNameInput.addEventListener('input', () => {
             limitWordCount(profileNameInput, MAX_NAME_WORDS);
         });
 
         profileBioInput.addEventListener('input', () => {
             limitWordCount(profileBioInput, MAX_BIO_WORDS);
-        });
+        });*/
 
     } else {
         editBtn.style.display = 'block';
@@ -207,12 +227,21 @@ function toggleEditMode(isEditing) {
     }
 }
 
-function limitWordCount(inputElement, maxWords) {
+/*function limitWordCount(inputElement, maxWords) {
     const words = inputElement.value.split(/\s+/).filter(word => word.length > 0);
     if (words.length > maxWords) {
         inputElement.value = words.slice(0, maxWords).join(' ');
     }
 }
+function limitWordCount(inputElement, maxChars) {
+    if (inputElement.value.length > maxChars) {
+        inputElement.value = inputElement.value.slice(0, maxChars);
+    }
+}
+
+profileBioInput.addEventListener('input', function() {
+    limitWordCount(this, 100); // Here, 100 is the maximum number of characters allowed
+});*/
 
 editUserBtn.addEventListener('click', () => {
     if (profileContent.style.display === 'none' || !profileContent.style.display) {
