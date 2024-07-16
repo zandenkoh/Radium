@@ -64,14 +64,14 @@ const fetchMyUserProfile = () => {
             } else {
                 console.log('No such user!');
             }
-            updateProgress(50);
+            updateProgress(100);
         }).catch((error) => {
             console.error('Error fetching user profile:', error);
             updateProgress(50);
         });
     } else {
         console.log('No user is signed in.');
-        updateProgress(50);
+        updateProgress(0);
     }
 };
 
@@ -90,7 +90,6 @@ document.addEventListener('DOMContentLoaded', () => {
         fetchUserProfile(userIdFromUrl);
     } else {
         console.log('No user ID found in the URL.');
-        updateProgress(50);
     }
 });
 
@@ -117,11 +116,9 @@ function fetchUserProfile(userId) {
                     userBanner.style.backgroundImage = 'url(https://i.pinimg.com/474x/81/8a/1b/818a1b89a57c2ee0fb7619b95e11aebd.jpg)';
                 }
             }
-            updateProgress(50);
         })
         .catch(error => {
             console.error('Error fetching user profile:', error);
-            updateProgress(50);
         });
 }
 
@@ -176,7 +173,6 @@ function displayUserArticles(userId) {
             
             if (querySnapshot.empty) {
                 articlesContainer.innerHTML = '<p>No articles found.</p>';
-                updateProgress(50);
                 return;
             }
             
@@ -204,10 +200,8 @@ function displayUserArticles(userId) {
                 
                 articlesContainer.appendChild(articleElement);
             });
-            updateProgress(50);
         })
         .catch(error => {
             console.error('Error fetching articles:', error);
-            updateProgress(50);
         });
 }
