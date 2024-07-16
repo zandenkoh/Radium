@@ -10,8 +10,19 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,300;0,400;0,700;0,900;1,300;1,400;1,700;1,900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap" rel="stylesheet">
 </head>
 <body>
+
+    <!--<div id="loading-screen">
+        <div id="loading-content">
+            <img src="./assets/San-Ti (1).png" alt="Loading">
+            <div id="loading-bar-container">
+                <div id="loading-bar"></div>
+            </div>
+        </div>
+    </div>-->
+    
     <div class="container">
         <aside class="sidebar">
             <!--<div class="logo">MyBlog</div>-->
@@ -58,7 +69,7 @@
                             <label for="profile-bio">Bio:</label>
                             <p id="profile-bio"></p>
                         </div>
-                        <button id="edit-btn"><i class="fa-solid fa-pen"></i> Edit Profile</button>
+                        <button id="edit-btn"><!--<i class="fa-solid fa-pen"></i>--> Edit</button>
                         <div id="edit-options" style="display: none;">
                             <button id="save-btn">Save</button>
                             <button id="cancel-btn">Cancel</button>
@@ -72,13 +83,19 @@
                         <div class="user-content-profile">
                             <div class="inside-user-content-profile">
                                 <div class="profile-content-image" id="profile-content-pic"></div>
-                                <h1 id="user-name-large"></h1>
+                                <div class="profile-name-about">
+                                    <h1 id="user-name-large"></h1>
+                                    <p id="user-about"></p>    
+                                </div>
+                                <button id="edit-user-btn"><!--<i class="fa-solid fa-pen"></i> --> Edit Profile</button>
+                                <img class="settings-svg" src="./assets/settings.svg">
                             </div>
-                            <button id="edit-user-btn"><i class="fa-solid fa-pen"></i> Edit Profile</button>
-                        </div>
-                        <div class="user-content-about" id="user-content-about">
-                            <p id="user-about"></p>
-                        </div>                        
+                            <!--<div class="user-content-about" id="user-content-about">
+                                <p id="user-about"></p>
+                            </div>-->      
+                            <!--<button id="edit-user-btn"><!-<i class="fa-solid fa-pen"></i> -> Edit Profile</button>
+                            <img class="settings-svg" src="./assets/settings.svg">-->
+                        </div>                 
                     </div>
                     <div class="user-main">
                         <!--<hr class="between-info-article">-->
