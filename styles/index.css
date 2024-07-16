@@ -321,7 +321,7 @@ button:hover {
 .article-title {
     font-size: 25px;
     margin: 0;
-    margin-bottom: 0;
+    margin-bottom: 10px;
     font-family: "Merriweather";
     color: #000;
     font-weight: 900;
@@ -334,7 +334,7 @@ button:hover {
     font-family: 'Roboto';
     color: #434343;
     line-height: 24px;
-    margin-bottom: 10px;
+    margin-bottom: 15px;
     width: 100%;
 }
 
@@ -503,8 +503,8 @@ button:hover {
     }
 
     .sidebar nav ul li a .this-page-selects {
-        width: 25px;
-        height: 25px;
+        width: 26px;
+        height: 26px;
         filter: invert(33%) saturate(200%) hue-rotate(323deg) brightness(95%) contrast(1050%);
     }
 
