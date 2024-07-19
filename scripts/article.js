@@ -224,6 +224,8 @@ const decodeAndFormatContent = (content) => {
                   .replace(/_(.*?)_/g, '<i>$1</i>');      // Italic formatting
 };
 
+const profileMobilePic = document.getElementById('profile-mobile-pic');
+
 // Function to fetch and display the logged-in user's profile picture
 const fetchUserProfile = () => {
     const user = auth.currentUser;
@@ -236,8 +238,10 @@ const fetchUserProfile = () => {
 
                 if (data.profilePicture) {
                     profilePic.style.backgroundImage = `url(${data.profilePicture})`;
+                    profileMobilePic.style.backgroundImage = `url(${data.profilePicture})`;
                 } else {
                     profilePic.style.backgroundImage = 'url(https://i.pinimg.com/474x/81/8a/1b/818a1b89a57c2ee0fb7619b95e11aebd.jpg)';
+                    profileMobilePic.style.backgroundImage = 'url(https://i.pinimg.com/474x/81/8a/1b/818a1b89a57c2ee0fb7619b95e11aebd.jpg)'; // Placeholder image if none exists
                 }
             } else {
                 console.log('No such user!');
