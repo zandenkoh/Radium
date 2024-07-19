@@ -3,7 +3,7 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: Arial, sans-serif;
+    font-family: Arial, "Roboto", "Merriweather", sans-serif;
 }
 
 body {
@@ -318,6 +318,7 @@ iframe {
     body {
         flex-direction: column;
         height: auto;
+        overflow-x: hidden;
     }
 
     .container {
