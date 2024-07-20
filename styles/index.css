@@ -363,6 +363,12 @@ button:hover {
     align-items: center;
     justify-content: center;
     z-index: 9999;
+
+    transition: opacity 0.3s ease;
+}
+
+.hidden {
+    opacity: 0;
 }
 
 #loading-content {
@@ -373,7 +379,7 @@ button:hover {
 #loading-content img {
     height: 100px;
     width: 100px;
-    border-radius: 15px;
+    border-radius: 0px;
 }
 
 #loading-bar-container {
@@ -391,7 +397,17 @@ button:hover {
 #loading-bar {
     width: 0;
     height: 100%;
-    background: #757575;
+    background: linear-gradient(90deg, 
+    #fff 0%, 
+    #ffddbabd 7%,
+    #f09433 14%,
+    #e6683c 24%, 
+    #dc2743 33%, 
+    #cc2366 50%, 
+    #bc1888 66%, 
+    #8818bc 80%,
+    #8040e6 85%,
+    #405DE6 100%);
     border-radius: 10px;
     transition: 1.3s ease;
 }
