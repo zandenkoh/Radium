@@ -105,7 +105,7 @@ function fetchUserProfile(userId) {
                 const data = doc.data();
                 largeName.textContent = data.name || 'Anonymous';
                 document.title = data.name + ' | Radium' || 'Anonymous';
-                articleWritten.textContent = 'Articles written by ' + data.name || 'Anonymous';
+                articleWritten.textContent = 'Written by ' + data.name || 'Anonymous';
                 profileAbout.textContent = data.bio || 'No Bio';
 
                 if (data.profilePicture) {
