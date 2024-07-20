@@ -348,9 +348,10 @@ i {
 }
 
 .inside-user-content-profile {
-    width: 70%;
+    width: 80%;
     display: flex;
-    margin-left: 15%;
+    margin-left: 10%;
+    overflow-x: visible;
 }
 
 .profile-content-image {
@@ -388,7 +389,7 @@ i {
     display: flex;
     flex-direction: column; /* Stack children vertically */
     align-items: flex-start; /* Align items to the start (left) */
-    width: 60%; /* Ensure it takes the full width of the container */
+    width: 85%; /* Ensure it takes the full width of the container */
     margin-left: 30px;
     padding-top: 5px;
 }
@@ -404,10 +405,10 @@ i {
 }
 
 #user-about {
-    font-size: 16px;
+    font-size: 18px;
     color: #5a5a5a;
     text-align: left;
-    font-family: 'Roboto';
+    font-family: "Roboto";
     font-weight: 400;
     text-wrap: wrap;
     width: 90%;
