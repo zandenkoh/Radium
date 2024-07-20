@@ -152,11 +152,14 @@ const updateProgress = (increment) => {
     progress += increment;
     loadingBar.style.width = `${progress}%`;
     if (progress >= 100) {
+      setTimeout(() => {
+        loadingScreen.classList.add('hidden'); // Add hidden class to start the fade-out transition
         setTimeout(() => {
-            loadingScreen.style.display = 'none';
-        }, 1500); // Delay slightly more than the transition duration
+          loadingScreen.style.display = 'none'; // Set display to none after the transition ends
+        }, 400); // Match the duration of the CSS transition
+      }, 1600); // Delay slightly more than the transition duration
     }
-};
+  };
 
 // Function to fetch and display the article
 const displayArticle = async () => {
@@ -206,6 +209,10 @@ const displayArticle = async () => {
                 } else {
                     console.log('No such author document!');
                 }
+
+                // Start the view counter
+                startViewCounter(postId);
+
             } else {
                 console.log('No such document!');
             }
@@ -255,6 +262,26 @@ const fetchUserProfile = () => {
         console.log('No user is signed in.');
         updateProgress(50);
     }
+};
+
+// Function to start the view counter
+const startViewCounter = (postId) => {
+    let viewTimeout = setTimeout(async () => {
+        try {
+            const articleRef = firestore.collection('posts').doc(postId);
+            await articleRef.update({
+                views: firebase.firestore.FieldValue.increment(1)
+            });
+            console.log('View count incremented');
+        } catch (error) {
+            console.error('Error updating view count:', error);
+        }
+    }, 60000); // 1 minute in milliseconds
+
+    // If the user leaves the page before 1 minute, clear the timeout
+    window.addEventListener('beforeunload', () => {
+        clearTimeout(viewTimeout);
+    });
 };
 
 // Call the functions to display the article and user profile picture when the page loads
