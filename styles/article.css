@@ -192,10 +192,8 @@ main {
     height: auto;
     max-height: 70vh;
     margin-bottom: 20px;
-    margin-left: 50%;
-    transform: translateX(-50%);
-    object-fit: cover;
-    
+    margin-left: 5%;
+    object-fit: cover;    
 }
 
 .seperate {
@@ -272,6 +270,12 @@ main hr {
     align-items: center;
     justify-content: center;
     z-index: 9999;
+
+    transition: opacity 0.3s ease;
+}
+
+.hidden {
+    opacity: 0;
 }
 
 #loading-content {
@@ -282,7 +286,8 @@ main hr {
 #loading-content img {
     height: 100px;
     width: 100px;
-    border-radius: 15px;
+    border-radius: 0;
+    -webkit-user-drag: none;
 }
 
 #loading-bar-container {
@@ -300,9 +305,17 @@ main hr {
 #loading-bar {
     width: 0;
     height: 100%;
-    background: #757575;
+    background: linear-gradient(45deg, 
+    #f09433 0%, 
+    #e6683c 17%, 
+    #dc2743 33%, 
+    #cc2366 50%, 
+    #bc1888 66%, 
+    #8818bc 80%,
+    #8040e6 85%,
+    #405DE6 100%);
     border-radius: 10px;
-    transition: 1.5s ease;
+    transition: 1.3s ease;
 }
 
 iframe {
