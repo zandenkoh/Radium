@@ -210,3 +210,30 @@ const firebaseConfig = {
     });
   };
   
+/*
+window.addEventListener('scroll', adjustMobileNav);
+
+function adjustMobileNav() {
+    const mobileNav = document.getElementById('mobile-nav');
+    const scrollPosition = window.scrollY;
+    
+    if (scrollPosition > 0) {
+        mobileNav.style.transform = 'translateY(-20px)'; // Adjust the value as needed
+    } else {
+        mobileNav.style.transform = 'translateY(0)';
+    }
+}
+*/
+
+window.addEventListener('scroll', adjustMobileNav);
+
+function adjustMobileNav() {
+    const mobileNav = document.getElementById('mobile-nav');
+    const vh = Math.max(document.documentElement.clientHeight || 0, window.innerHeight || 0);
+
+    if (window.innerHeight < vh) {
+        mobileNav.style.transform = `translateY(${vh - window.innerHeight}px)`;
+    } else {
+        mobileNav.style.transform = 'translateY(0)';
+    }
+}
