@@ -164,6 +164,7 @@ overlay.addEventListener('click', () => {
 
 function displayUserArticles(userId) {
     const articlesContainer = document.getElementById('articles-container');
+    const MAX_DESCRIPTION_LENGTH = 400;
     
     firestore.collection('posts')
         .where('authorId', '==', userId)
@@ -181,12 +182,24 @@ function displayUserArticles(userId) {
                 const articleElement = document.createElement('div');
                 articleElement.classList.add('article');
                 
-                // Create and append elements for article title and content
+                // Create and append elements for article image, title, and content
+                const imageElement = document.createElement('img');
+                imageElement.src = article.imageUrl || 'https://www.impactmania.com/wp-content/themes/cardinal/images/default-thumb.png'; // Replace with your default image URL
+                imageElement.alt = article.title;
+                imageElement.classList.add('article-image');
+                
+                const contentElement = document.createElement('div');
+                contentElement.classList.add('article-content');
+                
                 const titleElement = document.createElement('h3');
                 titleElement.textContent = article.title;
                 
-                const contentElement = document.createElement('p');
-                contentElement.textContent = article.description;
+                const descriptionElement = document.createElement('p');
+                let description = article.description;
+                if (description.length > MAX_DESCRIPTION_LENGTH) {
+                    description = description.substring(0, MAX_DESCRIPTION_LENGTH) + '...';
+                }
+                descriptionElement.textContent = description;
                 
                 // Optionally create a link to the article
                 const linkElement = document.createElement('a');
@@ -194,14 +207,132 @@ function displayUserArticles(userId) {
                 linkElement.textContent = 'Read more';
                 linkElement.classList.add('read-more-link');
                 
-                articleElement.appendChild(titleElement);
+                contentElement.appendChild(titleElement);
+                contentElement.appendChild(descriptionElement);
+                contentElement.appendChild(linkElement);
+                
+                articleElement.appendChild(imageElement);
                 articleElement.appendChild(contentElement);
-                articleElement.appendChild(linkElement);
                 
                 articlesContainer.appendChild(articleElement);
             });
         })
         .catch(error => {
             console.error('Error fetching articles:', error);
+        });
+}
+
+
+//follow
+const followUserBtn = document.getElementById('follow-user-btn');
+let isFollowing = false; // State to track if the current user is following the displayed user
+let isProcessing = false; // State to track if a follow/unfollow operation is in progress
+
+auth.onAuthStateChanged(user => {
+    if (user) {
+        const userIdFromUrl = getUserIdFromUrl();
+        if (userIdFromUrl) {
+            // Hide the follow button if the user is viewing their own profile
+            if (user.uid === userIdFromUrl) {
+                followUserBtn.style.display = 'none';
+                return;
+            }
+            checkIfFollowing(user.uid, userIdFromUrl);
+        }
+
+        followUserBtn.addEventListener('click', () => {
+            if (isProcessing) return; // Prevent multiple clicks while processing
+
+            isProcessing = true;
+            followUserBtn.disabled = true;
+
+            if (!isFollowing) {
+                followUser(user.uid, userIdFromUrl);
+            } else {
+                unfollowUser(user.uid, userIdFromUrl);
+            }
+        });
+    }
+});
+
+
+function checkIfFollowing(currentUserId, profileUserId) {
+    firestore.collection('users').doc(currentUserId).collection('following').doc(profileUserId)
+        .get()
+        .then(doc => {
+            if (doc.exists) {
+                isFollowing = true;
+                followUserBtn.textContent = 'Unfollow';
+                followUserBtn.classList.add('unfollow-btn');
+            } else {
+                isFollowing = false;
+                followUserBtn.textContent = 'Follow';
+                followUserBtn.classList.remove('unfollow-btn');
+            }
+            followUserBtn.disabled = false; // Enable the button after initial check
+        })
+        .catch(error => {
+            console.error('Error checking follow status:', error);
+            followUserBtn.disabled = false; // Enable the button if there's an error
+        });
+}
+
+function followUser(currentUserId, profileUserId) {
+    const batch = firestore.batch();
+
+    const currentUserFollowingRef = firestore.collection('users').doc(currentUserId).collection('following').doc(profileUserId);
+    const profileUserFollowersRef = firestore.collection('users').doc(profileUserId).collection('followers').doc(currentUserId);
+    
+    batch.set(currentUserFollowingRef, { timestamp: firebase.firestore.FieldValue.serverTimestamp() });
+    batch.set(profileUserFollowersRef, { timestamp: firebase.firestore.FieldValue.serverTimestamp() });
+
+    const currentUserRef = firestore.collection('users').doc(currentUserId);
+    const profileUserRef = firestore.collection('users').doc(profileUserId);
+    
+    batch.update(currentUserRef, { followingCount: firebase.firestore.FieldValue.increment(1) });
+    batch.update(profileUserRef, { followersCount: firebase.firestore.FieldValue.increment(1) });
+
+    batch.commit()
+        .then(() => {
+            isFollowing = true;
+            followUserBtn.textContent = 'Unfollow';
+            followUserBtn.classList.add('unfollow-btn');
+            isProcessing = false;
+            followUserBtn.disabled = false;
+        })
+        .catch(error => {
+            console.error('Error following user:', error);
+            isProcessing = false;
+            followUserBtn.disabled = false;
+        });
+}
+
+function unfollowUser(currentUserId, profileUserId) {
+    const batch = firestore.batch();
+
+    const currentUserFollowingRef = firestore.collection('users').doc(currentUserId).collection('following').doc(profileUserId);
+    const profileUserFollowersRef = firestore.collection('users').doc(profileUserId).collection('followers').doc(currentUserId);
+    
+    batch.delete(currentUserFollowingRef);
+    batch.delete(profileUserFollowersRef);
+
+    const currentUserRef = firestore.collection('users').doc(currentUserId);
+    const profileUserRef = firestore.collection('users').doc(profileUserId);
+    
+    batch.update(currentUserRef, { followingCount: firebase.firestore.FieldValue.increment(-1) });
+    batch.update(profileUserRef, { followersCount: firebase.firestore.FieldValue.increment(-1) });
+
+    batch.commit()
+        .then(() => {
+            isFollowing = false;
+            followUserBtn.textContent = 'Follow';
+            followUserBtn.classList.remove('unfollow-btn');
+            isProcessing = false;
+            followUserBtn.disabled = false;
+        })
+        .catch(error => {
+            console.error('Error unfollowing user:', error);
+            isProcessing = false;
+            followUserBtn.disabled = false;
         });
 }
