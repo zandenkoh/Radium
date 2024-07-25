@@ -3,20 +3,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="google" content="notranslate">
     <title>Radium</title>
     <link rel="stylesheet" href="./styles/article.css">
     <link rel="icon" href="./assets/San-Ti (1).png" type="image/png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Flex:opsz,wght@8..144,100..1000&display=swap" rel="stylesheet">
 </head>
 <body>
 
-    <!--<div id="loading-screen">
+    <div id="loading-screen">
         <div id="loading-content">
             <img src="./assets/San-Ti (1).png" alt="Loading">
             <div id="loading-bar-container">
                 <div id="loading-bar"></div>
             </div>
         </div>
-    </div>-->
+    </div>
 
     <div class="container">
         <aside class="sidebar">
@@ -68,12 +72,76 @@
                 <p id="article-topic"></p>
                 <div id="article-author"></div>
                 <hr class="seperate">
+                <div class="article-features">
+                    <div class="clap-item">
+                        <img src="assets/slap-1.svg" alt="clap" class="clap-comment-img">
+                        <span id="echo-count" class="count">0</span>
+                    </div>
+                    <div id="comment-item" class="comment-item">
+                        <img src="assets/comment.svg" alt="comment" class="clap-comment-img">
+                        <span id="comments-count" class="count">0</span>
+                    </div>
+                    <div class="spacer"></div>
+                    <!--<img src="assets/share-export.svg" alt="share" class="feature-icon">
+                    <img src="assets/svgexport-18.svg" alt="save" class="feature-icon">
+                    <img src="assets/ellipsis.svg" alt="more" class="feature-icon">-->
+                </div>
+                <hr class="seperate-2">
                 <img id="article-image" alt="">
                 <p id="article-content"></p>
                 <!--<div class="container" id="article-container">
                 </div>-->
-                
+                <div class="article-actions">
+                    <button class="clap-button" id="echo-button-bottom">
+                        <img src="assets/slap-1.svg" alt="clap" class="action-icon">
+                        <span id="echo-button-span">Echo</span>
+                    </button>
+                    <button id="comment-button" class="comment-button">
+                        <img src="assets/comment.svg" alt="comment" class="action-icon">
+                        <span lang="en">Comment</span>
+                    </button>
+                </div>
             </main>
+
+            <div class="after-article-profile">
+                <div class="inside-after-article-profile">
+                    <img src="" alt="" class="writer-profile-pic" id="writer-profile-pic">
+                    <div class="writer-profile">
+                        <a id="writer-name"></a>
+                        <p id="writer-about"></p>
+                    </div>
+                </div>
+                <button id="follow-user-btn" class="follow-btn">Follow</button>
+            </div>
+
+            <div id="writer-info-and-more-articles">
+                <div id="writer-info">
+                    <div id="comments-container">
+                        <h1 id="comments-count-2" class="comments-count-2"></h1>
+                        <div id="comment-input-container" class="when-hidden">
+                            <div id="comment-header" class="hidden">
+                                <img id="current-user-profile-pic" class="comment-profile-pic" src="" alt="Profile Picture">
+                                <span id="current-user-name" class="comment-author"></span>
+                            </div>
+                            <textarea id="comment-textarea" placeholder="What are your thoughts?" maxlength="600"></textarea>
+                            <div id="comment-buttons" class="hidden">
+                                <button id="comment-cancel-button">Cancel</button>
+                                <button id="comment-submit-button">Comment</button>
+                            </div>
+                        </div>
+                        <hr class="after-writer-hr">
+                        <!-- Existing comments will be loaded here -->
+                        <div id="existing-comments-container"></div>
+                    </div>                    
+                </div>
+                <div id="articles-container">
+                    <h1 class="comments-count-2">More articles</h1>
+                    <!-- More articles will be loaded here -->
+                    
+                </div>
+                
+            </div>
+            <div id="observer"></div>
         </div>
     </div>
     
