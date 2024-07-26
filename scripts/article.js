@@ -1001,6 +1001,10 @@ document.addEventListener('DOMContentLoaded', () => {
                             authorId = articleDoc.data().authorId;
                             if (authorId) {
                                 checkIfFollowing(user.uid, authorId);
+                                if (user.uid === authorId) {
+                                    followUserBtn.style.display = 'none';
+                                    return;
+                                }
 
                                 followUserBtn.addEventListener('click', () => {
                                     if (isProcessing) return; // Prevent multiple clicks while processing
