@@ -34,6 +34,7 @@ const overlay = document.getElementById('overlay');
 const articleWritten = document.getElementById('article-user');
 const loadingScreen = document.getElementById('loading-screen');
 const loadingBar = document.getElementById('loading-bar');
+const userFollowers = document.getElementById('user-followers');
 
 let progress = 0;
 
@@ -104,16 +105,24 @@ function fetchUserProfile(userId) {
             if (doc.exists) {
                 const data = doc.data();
                 largeName.textContent = data.name || 'Anonymous';
+                userFollowers.textContent = data.followersCount + ' followers' || '0';
                 document.title = data.name + ' | Radium' || 'Anonymous';
                 articleWritten.textContent = 'Written by ' + data.name || 'Anonymous';
-                profileAbout.textContent = data.bio || 'No Bio';
+                profileAbout.textContent = data.bio || 'No bio available';
 
                 if (data.profilePicture) {
                     largePic.style.backgroundImage = `url(${data.profilePicture})`;
-                    userBanner.style.backgroundImage = `url(${data.profilePicture})`;
+                    //userBanner.style.backgroundImage = `url(${data.profilePicture})`;
                 } else {
                     largePic.style.backgroundImage = 'url(https://i.pinimg.com/474x/81/8a/1b/818a1b89a57c2ee0fb7619b95e11aebd.jpg)';
-                    userBanner.style.backgroundImage = 'url(https://i.pinimg.com/474x/81/8a/1b/818a1b89a57c2ee0fb7619b95e11aebd.jpg)';
+                    //userBanner.style.backgroundImage = 'url(https://i.pinimg.com/474x/81/8a/1b/818a1b89a57c2ee0fb7619b95e11aebd.jpg)';
+                }
+
+                if (data.bannerImage) {
+                    userBanner.style.backgroundImage = `url(${data.bannerImage})`;
+                } else {
+                    //userBanner.style.backgroundImage = 'url(https://phlearn.com/wp-content/uploads/2019/03/david-klaasen-775082-unsplash.jpg)';
+                    userBanner.style.backgroundImage = `url(${data.profilePicture})`;
                 }
             }
         })
@@ -262,7 +271,7 @@ function checkIfFollowing(currentUserId, profileUserId) {
         .then(doc => {
             if (doc.exists) {
                 isFollowing = true;
-                followUserBtn.textContent = 'Unfollow';
+                followUserBtn.textContent = 'Following';
                 followUserBtn.classList.add('unfollow-btn');
             } else {
                 isFollowing = false;
@@ -295,7 +304,7 @@ function followUser(currentUserId, profileUserId) {
     batch.commit()
         .then(() => {
             isFollowing = true;
-            followUserBtn.textContent = 'Unfollow';
+            followUserBtn.textContent = 'Following';
             followUserBtn.classList.add('unfollow-btn');
             isProcessing = false;
             followUserBtn.disabled = false;
