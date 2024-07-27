@@ -32,6 +32,8 @@ const profileContent = document.getElementById('profile-content');
 const profileAbout = document.getElementById('user-about');
 const overlay = document.getElementById('overlay');
 const articleWritten = document.getElementById('article-user');
+const userFollowers = document.getElementById('user-followers');
+
 /*
 // Fetch user data on page load
 auth.onAuthStateChanged(user => {
@@ -82,18 +84,29 @@ function fetchUserProfile() {
                 profileEmailSpan.textContent = auth.currentUser.email || 'No Email';
                 profileBioP.textContent = data.bio || 'No Bio';
                 profileAbout.textContent = data.bio || 'No Bio';
+                userFollowers.textContent = data.followersCount + ' followers' || '0';
 
                 if (data.profilePicture) {
                     profileImage.src = data.profilePicture;
                     profilePic.style.backgroundImage = `url(${data.profilePicture})`;
                     largePic.style.backgroundImage = `url(${data.profilePicture})`;
-                    userBanner.style.backgroundImage = `url(${data.profilePicture})`;
+                    //userBanner.style.backgroundImage = `url(${data.profilePicture})`;
+                    //userBanner.style.backgroundImage = `url(${data.bannerImage})`;
                 } else {
                     profileImage.src = 'https://i.pinimg.com/474x/81/8a/1b/818a1b89a57c2ee0fb7619b95e11aebd.jpg';
                     profilePic.style.backgroundImage = 'url(https://i.pinimg.com/474x/81/8a/1b/818a1b89a57c2ee0fb7619b95e11aebd.jpg)';
                     largePic.style.backgroundImage = 'url(https://i.pinimg.com/474x/81/8a/1b/818a1b89a57c2ee0fb7619b95e11aebd.jpg)';
-                    userBanner.style.backgroundImage = 'url(https://i.pinimg.com/474x/81/8a/1b/818a1b89a57c2ee0fb7619b95e11aebd.jpg)';
+                    //userBanner.style.backgroundImage = 'url(https://i.pinimg.com/474x/81/8a/1b/818a1b89a57c2ee0fb7619b95e11aebd.jpg)';
+                    //userBanner.style.backgroundImage = 'url(https://i.pinimg.com/474x/81/8a/1b/818a1b89a57c2ee0fb7619b95e11aebd.jpg)';
                 }
+
+                if (data.bannerImage) {
+                    userBanner.style.backgroundImage = `url(${data.bannerImage})`;
+                } else {
+                    //userBanner.style.backgroundImage = 'url(https://phlearn.com/wp-content/uploads/2019/03/david-klaasen-775082-unsplash.jpg)';
+                    userBanner.style.backgroundImage = `url(${data.profilePicture})`;
+                }
+
                 updateProgress(100);
             }
         })
@@ -102,6 +115,33 @@ function fetchUserProfile() {
             updateProgress(50);
         });
 }
+
+
+const customiseBannerBtn = document.getElementById('customise-banner-btn');
+const bannerUpload = document.getElementById('banner-upload');
+
+customiseBannerBtn.addEventListener('click', () => {
+    bannerUpload.click();
+});
+
+bannerUpload.addEventListener('change', (e) => {
+    const file = e.target.files[0];
+    if (file) {
+        const uploadTask = storage.ref(`banner_images/${userId}`).put(file);
+        uploadTask.on('state_changed',
+            (snapshot) => {},
+            (error) => {
+                console.error('Error uploading image:', error);
+            },
+            () => {
+                uploadTask.snapshot.ref.getDownloadURL().then((downloadURL) => {
+                    userBanner.style.backgroundImage = `url(${downloadURL})`;
+                    firestore.collection('users').doc(userId).update({ bannerImage: downloadURL });
+                });
+            }
+        );
+    }
+});
 
 function updateProfile(name, bio) {
     firestore.collection('users').doc(userId).update({ name, bio })
@@ -366,3 +406,4 @@ function displayUserArticles(userId) {
             console.error('Error fetching articles:', error);
         });
 }
+
