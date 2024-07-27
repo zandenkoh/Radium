@@ -261,7 +261,7 @@ overlay.addEventListener('click', () => {
     document.body.classList.remove('no-scroll');
 });
 
-
+/*
 function displayUserArticles(userId) {
     const articlesContainer = document.getElementById('articles-container');
     
@@ -297,6 +297,67 @@ function displayUserArticles(userId) {
                 articleElement.appendChild(titleElement);
                 articleElement.appendChild(contentElement);
                 articleElement.appendChild(linkElement);
+                
+                articlesContainer.appendChild(articleElement);
+            });
+        })
+        .catch(error => {
+            console.error('Error fetching articles:', error);
+        });
+}
+*/
+
+function displayUserArticles(userId) {
+    const articlesContainer = document.getElementById('articles-container');
+    const MAX_DESCRIPTION_LENGTH = 400;
+    
+    firestore.collection('posts')
+        .where('authorId', '==', userId)
+        .get()
+        .then(querySnapshot => {
+            articlesContainer.innerHTML = ''; // Clear any existing articles
+            
+            if (querySnapshot.empty) {
+                articlesContainer.innerHTML = '<p>No articles found.</p>';
+                return;
+            }
+            
+            querySnapshot.forEach(doc => {
+                const article = doc.data();
+                const articleElement = document.createElement('div');
+                articleElement.classList.add('article');
+                
+                // Create and append elements for article image, title, and content
+                const imageElement = document.createElement('img');
+                imageElement.src = article.imageUrl || 'https://www.impactmania.com/wp-content/themes/cardinal/images/default-thumb.png'; // Replace with your default image URL
+                imageElement.alt = article.title;
+                imageElement.classList.add('article-image');
+                
+                const contentElement = document.createElement('div');
+                contentElement.classList.add('article-content');
+                
+                const titleElement = document.createElement('h3');
+                titleElement.textContent = article.title;
+                
+                const descriptionElement = document.createElement('p');
+                let description = article.description;
+                if (description.length > MAX_DESCRIPTION_LENGTH) {
+                    description = description.substring(0, MAX_DESCRIPTION_LENGTH) + '...';
+                }
+                descriptionElement.textContent = description;
+                
+                // Optionally create a link to the article
+                const linkElement = document.createElement('a');
+                linkElement.href = `article.html?id=${doc.id}`;
+                linkElement.textContent = 'Read more';
+                linkElement.classList.add('read-more-link');
+                
+                contentElement.appendChild(titleElement);
+                contentElement.appendChild(descriptionElement);
+                contentElement.appendChild(linkElement);
+                
+                articleElement.appendChild(imageElement);
+                articleElement.appendChild(contentElement);
                 
                 articlesContainer.appendChild(articleElement);
             });
