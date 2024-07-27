@@ -174,7 +174,7 @@ imageUpload.addEventListener('change', (e) => {
                     profileImage.src = downloadURL;
                     profilePic.style.backgroundImage = `url(${downloadURL})`;
                     largePic.style.backgroundImage = `url(${downloadURL})`;
-                    userBanner.style.backgroundImage = `url(${downloadURL})`;
+                    //userBanner.style.backgroundImage = `url(${downloadURL})`;
                     firestore.collection('users').doc(userId).update({ profilePicture: downloadURL });
                 });
             }
