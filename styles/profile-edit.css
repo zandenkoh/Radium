@@ -297,7 +297,7 @@ i {
 
 #cancel-btn {
     margin-top: 0;
-    padding: 12px 50px;
+    padding: 12px 40px;
     border-radius: 50px;
     color: #797979;
     border: 1px solid #797979;
@@ -330,24 +330,49 @@ i {
 .user-header {
     width: 100%;
     height: 425px;
-    background: #000;
+    background: #fff;
 }
 
 .user-banner {
-    width: 100%;
-    height: 50%;
-    background: #e0e0e0;
+    width: calc(100% - 50px);
+    /*width: auto;*/
+    margin-left: 50%;
+    transform: translateX(-50%);
+    height: calc(50% - 20px);
+    margin-top: 20px;
+    margin-bottom: 0px;
+    background: #fff;
     background-position: top;
     background-repeat: no-repeat;
     background-size: cover;
     object-fit: cover;
+    border-radius: 15px;
+    position: relative;
+    aspect-ratio: 5.7/1;
+}
+
+#customise-banner-btn {
+    position: absolute;
+    bottom: 6px;
+    right: 6px;
+    background: #fff;
+    color: #000;
+    border: none;
+    padding: 7px;
+    cursor: pointer;
+    border-radius: 50px;
+    height: 30px;
+    width: 40px;
+    border: 1px solid #686868;
+    cursor: pointer;
+
 }
 
 .user-content-profile {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    height: 50%;
+    height: calc(50% + 10px);
     background: #fff;
     /*padding-left: 170px;
     padding-right: 170px;
@@ -355,15 +380,16 @@ i {
 }
 
 .inside-user-content-profile {
-    width: 70%;
+    width: 80%;
     display: flex;
-    margin-left: 15%;
+    margin-left: 10%;
 }
 
 .profile-content-image {
-    width: 110px;
-    height: 110px;
-    border-radius: 0;
+    width: 170px;
+    min-width: 170px;
+    height: 170px;
+    border-radius: 50%;
     background: #e0e0e0;
     /*margin-top: -60px;*/
     border: 6px solid #fff;
@@ -395,19 +421,20 @@ i {
     display: flex;
     flex-direction: column; /* Stack children vertically */
     align-items: flex-start; /* Align items to the start (left) */
-    width: 60%; /* Ensure it takes the full width of the container */
+    width: 85%; /* Ensure it takes the full width of the container */
     margin-left: 30px;
     padding-top: 5px;
 }
 
 #user-name-large {
-    font-size: 33px;
+    font-size: 36px;
     color: #000;
     text-align: left;
-    font-family: 'Roboto';
+    font-family: "Roboto", sans-serif;
     font-weight: 600;
     margin-bottom: 10px; /* Add space below the name */
     text-wrap: wrap;
+    letter-spacing: -1px;
 }
 
 #user-about {
@@ -417,7 +444,7 @@ i {
     font-family: 'Roboto';
     font-weight: 400;
     text-wrap: wrap;
-    width: 90%;
+    width: 94%;
 }
 
 
@@ -452,7 +479,7 @@ i {
     border-radius: 50%;
     cursor: pointer;
     margin-top: 0;
-    margin-left: 15px;
+    margin-left: 10px;
 }
 
 .settings-svg:hover {
@@ -539,9 +566,15 @@ i {
 
 #article-user {
     font-family: 'Roboto';
-    font-size: 20px;
+    font-size: 18px;
     font-weight: 400;
-    margin-top: 25px;
+    margin-top: 10px;
+    position: sticky;
+    top: 0;
+    width: 100%;
+    background: #f6f6f6;
+    padding: 15px 0;
+    border-bottom: 1px solid #ddd;
 }
 /*
 .article {
@@ -591,7 +624,7 @@ i {
     padding: 40px 20px;
     padding-bottom: 40px;;
     margin-bottom: 5px;
-    border-top: 1px solid #ddd;
+    border-bottom: 1px solid #ddd;
 }
 
 .article-image {
