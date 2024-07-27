@@ -323,24 +323,32 @@ i {
 .user-header {
     width: 100%;
     height: 425px;
-    background: #000;
+    background: #fff;
 }
 
 .user-banner {
-    width: 100%;
-    height: 50%;
-    background: #e0e0e0;
+    width: calc(100% - 50px);
+    /*width: auto;*/
+    margin-left: 50%;
+    transform: translateX(-50%);
+    height: calc(50% - 20px);
+    margin-top: 20px;
+    margin-bottom: 0px;
+    background: #fff;
     background-position: top;
     background-repeat: no-repeat;
     background-size: cover;
     object-fit: cover;
+    border-radius: 15px;
+    position: relative;
+    aspect-ratio: 5.7/1;
 }
 
 .user-content-profile {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    height: 50%;
+    height: calc(50% + 10px);
     background: #fff;
     /*padding-left: 170px;
     padding-right: 170px;
@@ -355,10 +363,10 @@ i {
 }
 
 .profile-content-image {
-    width: 110px;
-    min-width: 110px;
-    height: 110px;
-    border-radius: 0;
+    width: 150px;
+    min-width: 150px;
+    height: 150px;
+    border-radius: 50%;
     background: #e0e0e0;
     /*margin-top: -60px;*/
     border: 6px solid #fff;
@@ -396,17 +404,27 @@ i {
 }
 
 #user-name-large {
-    font-size: 33px;
+    font-size: 36px;
     color: #000;
     text-align: left;
-    font-family: 'Roboto';
+    font-family: "Roboto", sans-serif;
     font-weight: 600;
-    margin-bottom: 10px; /* Add space below the name */
+    margin-bottom: 0px; /* Add space below the name */
     text-wrap: wrap;
+    letter-spacing: -1px;
+}
+
+#user-followers {
+    font-size: 16px;
+    color: #5a5a5a;
+    text-align: left;
+    font-family: "Roboto";
+    font-weight: 200;
+    margin-bottom: 10px;
 }
 
 #user-about {
-    font-size: 18px;
+    font-size: 16px;
     color: #5a5a5a;
     text-align: left;
     font-family: "Roboto";
@@ -417,7 +435,7 @@ i {
 
 
 #articles-container {
-    margin-top: 20px;
+    margin-top: 5px;
 }
 
 #follow-user-btn {
@@ -447,8 +465,8 @@ i {
 }
 
 #follow-user-btn.unfollow-btn:hover {
-    color: #757575;
-    border: 1px solid #757575;
+    color: #000;
+    border: 1px solid #000;
 }
 
 .notifications-svg {
@@ -546,9 +564,15 @@ i {
 
 #article-user {
     font-family: 'Roboto';
-    font-size: 20px;
+    font-size: 18px;
     font-weight: 400;
-    margin-top: 25px;
+    margin-top: 10px;
+    position: sticky;
+    top: 0;
+    width: 100%;
+    background: #f6f6f6;
+    padding: 15px 0;
+    border-bottom: 1px solid #ddd;
 }
 /*
 .article {
@@ -599,7 +623,7 @@ i {
     padding: 40px 20px;
     padding-bottom: 40px;;
     margin-bottom: 5px;
-    border-top: 1px solid #ddd;
+    border-bottom: 1px solid #ddd;
 }
 
 .article-image {
