@@ -104,7 +104,7 @@ function fetchUserProfile(userId) {
         .then(doc => {
             if (doc.exists) {
                 const data = doc.data();
-                largeName.textContent = data.name || 'Anonymous';
+                //largeName.textContent = data.name || 'Anonymous';
                 userFollowers.textContent = data.followersCount + ' followers' || '0';
                 document.title = data.name + ' | Radium' || 'Anonymous';
                 articleWritten.textContent = 'Written by ' + data.name || 'Anonymous';
@@ -123,6 +123,16 @@ function fetchUserProfile(userId) {
                 } else {
                     //userBanner.style.backgroundImage = 'url(https://phlearn.com/wp-content/uploads/2019/03/david-klaasen-775082-unsplash.jpg)';
                     userBanner.style.backgroundImage = `url(${data.profilePicture})`;
+                }
+
+                const verifiedBadge = document.getElementById('verified-badge');
+                const userNameText = document.getElementById('user-name-text');
+                if (data.verified) {
+                    verifiedBadge.style.display = 'inline';
+                    userNameText.textContent = data.name || 'Anonymous';
+                } else {
+                    verifiedBadge.style.display = 'none';
+                    userNameText.textContent = data.name || 'Anonymous';
                 }
             }
         })
@@ -243,7 +253,7 @@ auth.onAuthStateChanged(user => {
         if (userIdFromUrl) {
             // Hide the follow button if the user is viewing their own profile
             if (user.uid === userIdFromUrl) {
-                followUserBtn.style.display = 'none';
+              followUserBtn.style.display = 'none';
                 return;
             }
             checkIfFollowing(user.uid, userIdFromUrl);
