@@ -208,10 +208,20 @@ const displayArticle = async () => {
                     const authorData = authorDoc.data();
                     const authorName = authorData.name || 'Unknown Author';
                     const profilePicture = authorData.profilePicture || './assets/default-profile-pic.jpg';
+                    const isVerified = authorData.verified || false;
+                    
                     document.getElementById('writer-profile-pic').src = authorData.profilePicture || './assets/default-profile-pic.jpg';
-                    document.getElementById('writer-name').textContent = "" + authorData.name || 'Unknown Author';
+                    document.getElementById('user-name-text').textContent = "" + authorData.name || 'Unknown Author';
                     document.getElementById('writer-name').href = "user.html?userId=" + data.authorId || 'WdiE3Q9og5WFnrVjSO2DyUdcEp82';
                     document.getElementById('writer-about').textContent = authorData.bio || 'No bio';
+                    
+                    const verifiedBadge = document.getElementById('verified-badge');
+                    if (isVerified) {
+                        verifiedBadge.style.display = 'inline';
+                    } else {
+                        verifiedBadge.style.display = 'none';
+                    }
+                    
                     //const publishDate = data.timestamp ? new Date(data.timestamp.seconds * 1000).toLocaleDateString() : 'Unknown Date';
                     const publishDate = data.timestamp ? new Date(data.timestamp.seconds * 1000).toLocaleDateString('en-GB', { month: 'long', day: 'numeric', year: 'numeric' }) : 'Unknown Date';
                     const readDura = data.timeRead || '1';
@@ -858,7 +868,7 @@ function fetchArticles() {
                 echoImage.classList.add('clap-comment-img-more');
 
                 const echoCount = document.createElement('span');
-                echoCount.id = 'echo-count';
+                echoCount.id = 'echo-count-article';
                 echoCount.classList.add('count-more');
                 echoCount.textContent = article.echos || 0;
 
