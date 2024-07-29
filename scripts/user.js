@@ -244,6 +244,7 @@ function displayUserArticles(userId) {
 
 //follow
 const followUserBtn = document.getElementById('follow-user-btn');
+const notificationImg = document.getElementById('notifications-svg');
 let isFollowing = false; // State to track if the current user is following the displayed user
 let isProcessing = false; // State to track if a follow/unfollow operation is in progress
 
@@ -283,16 +284,20 @@ function checkIfFollowing(currentUserId, profileUserId) {
                 isFollowing = true;
                 followUserBtn.textContent = 'Following';
                 followUserBtn.classList.add('unfollow-btn');
+                notificationImg.style.display = 'block';
+
             } else {
                 isFollowing = false;
                 followUserBtn.textContent = 'Follow';
                 followUserBtn.classList.remove('unfollow-btn');
+                notificationImg.style.display = 'none';
             }
             followUserBtn.disabled = false; // Enable the button after initial check
         })
         .catch(error => {
             console.error('Error checking follow status:', error);
             followUserBtn.disabled = false; // Enable the button if there's an error
+            notificationImg.style.display = 'none';
         });
 }
 
@@ -318,11 +323,13 @@ function followUser(currentUserId, profileUserId) {
             followUserBtn.classList.add('unfollow-btn');
             isProcessing = false;
             followUserBtn.disabled = false;
+            notificationImg.style.display = 'block';
         })
         .catch(error => {
             console.error('Error following user:', error);
             isProcessing = false;
             followUserBtn.disabled = false;
+            notificationImg.style.display = 'none';
         });
 }
 
@@ -348,10 +355,12 @@ function unfollowUser(currentUserId, profileUserId) {
             followUserBtn.classList.remove('unfollow-btn');
             isProcessing = false;
             followUserBtn.disabled = false;
+            notificationImg.style.display = 'none';
         })
         .catch(error => {
             console.error('Error unfollowing user:', error);
             isProcessing = false;
             followUserBtn.disabled = false;
+            notificationImg.style.display = 'block';
         });
 }
