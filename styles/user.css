@@ -414,6 +414,11 @@ i {
     letter-spacing: -1px;
 }
 
+#verified-badge img {
+    -webkit-user-drag: none;
+    user-select: none;
+}
+
 #user-followers {
     font-size: 16px;
     color: #5a5a5a;
@@ -449,6 +454,7 @@ i {
     background: #000;
     user-select: none;
     height: 40px;
+    transition: ease-in-out 0.12s;
 }
 
 #follow-user-btn:hover {
@@ -459,14 +465,20 @@ i {
 }
 
 #follow-user-btn.unfollow-btn {
-    background: #fff;
+    background: transparent;
     color: #454545;
     border: 1px solid #454545;
+    transition: ease-in-out 0.12s;
 }
 
 #follow-user-btn.unfollow-btn:hover {
     color: #000;
     border: 1px solid #000;
+}
+
+#follow-user-btn[disabled] {
+    opacity: 0.5;
+    cursor: not-allowed;
 }
 
 .notifications-svg {
@@ -478,6 +490,7 @@ i {
     cursor: pointer;
     margin-top: 0;
     margin-left: 10px;
+    display: none;
 }
 
 .notifications-svg:hover {
