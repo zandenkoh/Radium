@@ -581,6 +581,12 @@ iframe {
     border: 1px solid #757575;
 }
 
+#follow-user-btn[disabled] {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+
 /*Comments container*/
 #comments-container {
 
