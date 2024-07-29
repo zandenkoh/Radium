@@ -16,7 +16,7 @@ header img {
     height: 35px;
     margin-left: calc(50% - 17.5px);
     -webkit-user-drag: none;
-    border-radius: 6px;
+    border-radius: 0;
 }
 
 main {
@@ -83,6 +83,11 @@ form button {
 
 form button:hover {
     background-color: #0fa37ed7;
+}
+
+#sign-up-button[disabled] {
+    opacity: 0.5;
+    cursor: not-allowed;
 }
 
 .error-message {
