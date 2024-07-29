@@ -161,7 +161,39 @@ auth.onAuthStateChanged((user) => {
     }
 });
 
-const loadingScreen = document.getElementById('loading-screen');
+
+
+let progress = 0;
+
+const updateProgress = (increment) => {
+    progress += increment;
+    if (progress >= 100) {
+        setTimeout(() => {
+            // Hide the skeleton loader
+            document.getElementById('skeleton-loader').style.display = 'none';
+
+            // Show article content
+            document.getElementById('article-title').style.display = 'block';
+            document.getElementById('article-topic').style.display = 'block';
+            document.getElementById('article-author').style.display = 'block';
+            document.querySelector('.seperate').style.display = 'block';
+            document.querySelector('.article-features').style.display = 'flex';
+            document.querySelector('.seperate-2').style.display = 'block';
+            document.getElementById('article-image').style.display = 'block';
+            document.getElementById('article-content').style.display = 'block';
+            document.querySelector('.article-actions').style.display = 'flex';
+            document.querySelector('.article-features').style.display = 'flex';
+            document.querySelector('.after-article-profile').style.display = 'flex';
+            document.getElementById('writer-info-and-more-articles').style.display = 'flex';
+            document.querySelector('.article-actions').style.display = 'flex';
+
+        }, 0); // Delay slightly more than the transition duration
+    } else {
+    }
+};
+
+
+/*const loadingScreen = document.getElementById('loading-screen');
 const loadingBar = document.getElementById('loading-bar');
 
 let progress = 0;
@@ -177,7 +209,7 @@ const updateProgress = (increment) => {
         }, 400); // Match the duration of the CSS transition
       }, 1600); // Delay slightly more than the transition duration
     }
-};
+};*/
 
 // Function to fetch and display the article
 const displayArticle = async () => {
@@ -251,15 +283,15 @@ const displayArticle = async () => {
                 initializeEchoButtons(postId);
                 updateCommentCount(postId);
 
-                updateProgress(100);
+                //updateProgress(100);
 
             } else {
                 console.log('No such document!');
-                updateProgress(50);
+                //updateProgress(50);
             }
         } catch (error) {
             console.log('Error getting document:', error);
-            updateProgress(50);
+            //updateProgress(50);
         }
     }
 };
@@ -313,8 +345,10 @@ const fetchCurrentUserProfile = () => {
                 const data = doc.data();
                 document.getElementById('current-user-profile-pic').src = data.profilePicture || 'https://i.pinimg.com/474x/81/8a/1b/818a1b89a57c2ee0fb7619b95e11aebd.jpg';
             }
+            updateProgress(100);
         }).catch((error) => {
             console.error('Error fetching user profile:', error);
+            updateProgress(50);
         });
     }
 };
@@ -867,10 +901,19 @@ function fetchArticles() {
                 echoImage.alt = 'clap';
                 echoImage.classList.add('clap-comment-img-more');
 
-                const echoCount = document.createElement('span');
-                echoCount.id = 'echo-count-article';
-                echoCount.classList.add('count-more');
-                echoCount.textContent = article.echos || 0;
+                const echoCounter = document.createElement('span');
+                echoCounter.id = 'echo-count-article';
+                echoCounter.classList.add('count-more');
+                //echoCounter.textContent = article.echos || 0;
+
+                firestore.collection('posts').doc(doc.id).collection('echos').get()
+                    .then(echosSnapshot => {
+                        const echoCount = echosSnapshot.size; // Get the number of echo documents
+                        echoCounter.textContent = echoCount || 0;
+                    })
+                    .catch(error => {
+                        console.error('Error updating echo count:', error);
+                    });
 
                 const echoPublish = document.createElement('span');
                 echoPublish.id = 'echo-publish';
@@ -887,7 +930,7 @@ function fetchArticles() {
                 echoPublish.textContent = ' • ' + publishDate;
 
                 echoContainer.appendChild(echoImage);
-                echoContainer.appendChild(echoCount);
+                echoContainer.appendChild(echoCounter);
                 echoContainer.appendChild(echoPublish);
 
                 // Create a link for the article
