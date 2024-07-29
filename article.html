@@ -13,14 +13,14 @@
 </head>
 <body>
 
-    <div id="loading-screen">
+    <!--<div id="loading-screen">
         <div id="loading-content">
             <img src="./assets/San-Ti (1).png" alt="Loading">
             <div id="loading-bar-container">
                 <div id="loading-bar"></div>
             </div>
         </div>
-    </div>
+    </div>-->
 
     <div class="container">
         <aside class="sidebar">
@@ -68,11 +68,21 @@
             </header>-->
             
             <main>
+                <div id="skeleton-loader">
+                    <div class="skeleton skeleton-title"></div>
+                    <div class="skeleton skeleton-author"></div>
+                    <div class="skeleton skeleton-image"></div>
+                    <div class="skeleton skeleton-text"></div>
+                    <div class="skeleton skeleton-text"></div>
+                    <div class="skeleton skeleton-text"></div>
+                    <div class="skeleton skeleton-echo"></div>
+                </div>
+
                 <h1 id="article-title"></h1>
-                <p id="article-topic"></p>
+                <p id="article-topic" style="display: none;"></p>
                 <div id="article-author"></div>
-                <hr class="seperate">
-                <div class="article-features">
+                <hr class="seperate" style="display: none;">
+                <div class="article-features" id="article-features">
                     <div class="clap-item">
                         <img src="assets/slap-1.svg" alt="clap" class="clap-comment-img">
                         <span id="echo-count" class="count">0</span>
@@ -86,7 +96,7 @@
                     <img src="assets/svgexport-18.svg" alt="save" class="feature-icon">
                     <img src="assets/ellipsis.svg" alt="more" class="feature-icon">-->
                 </div>
-                <hr class="seperate-2">
+                <hr class="seperate-2" style="display: none;">
                 <img id="article-image" alt="">
                 <p id="article-content"></p>
                 <!--<div class="container" id="article-container">
