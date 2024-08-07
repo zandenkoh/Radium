@@ -16,6 +16,17 @@ body {
     width: 100%;
 }
 
+.sidebar-logo {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    margin-left: 0;
+    margin-bottom: 0;
+    margin-top: 15px;
+    align-items: center;
+    display: none;
+}
+
 .sidebar {
     position: fixed;
     height: 100vh;
@@ -52,6 +63,8 @@ body {
 .sidebar nav ul {
     list-style-type: none;
     text-align: center;
+    padding: 0;
+    margin-top: 10vh;
 }
 
 .sidebar nav ul li {
@@ -80,7 +93,9 @@ body {
 }
 
 .sidebar hr {
-    border: 0.5px solid #c8c8c8;
+    border: 0.5px solid #e4e4e4;
+    width: 70%;
+    margin-left: 20%;
 }
 
 .main-content {
@@ -96,29 +111,55 @@ header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 10px 20px;
+    padding: 10px 0;
     background-color: #fff;
     border-bottom: 2px solid #e7e7e7;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    /*box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);*/
+    position: fixed;
+    width: 100%;
+    z-index: 1000;
+    transition: 0s ease-in-out;
+}
+
+header.hidden {
+    transform: translateY(-80px);
+    transition: 0s ease-in-out;
 }
 
 .search-bar {
-    flex-grow: 1;
-    max-width: 500px;
-    margin-right: 20px;
+    margin-left: 50%;
+    transform: translateX(-58%);
+    align-items: center;
+}
+
+.search-bar img {
+    width: 22px;
+    height: 22px;
+    position: absolute;
+    margin-top: 8px;
+    margin-left: 17px;
 }
 
 .search-bar input {
-    padding: 10px;
-    border: 1px solid #ccc;
+    padding: 12px 25px;
+    padding-left: 50px;
+    border: none;
     border-radius: 20px;
-    width: 100%;
+    width: 600px;
     outline: none;
     transition: border 0.3s;
+    background: #f9f9f9;
+    font-size: 14px;
+    color: #757575;
 }
 
-.search-bar input:focus {
-    border-color: #000;
+.search-bar:focus-within input {
+    background: #f3f3f3;
+    color: #000;
+}
+
+.search-bar:focus-within img {
+    filter: invert(33%) saturate(200%) hue-rotate(323deg) brightness(95%) contrast(1050%);
 }
 
 .header-icons {
@@ -141,18 +182,19 @@ header {
 .user-info {
     display: flex;
     align-items: center;
+    margin-left: -5px;
+    position: absolute;
+    bottom: 10px;
 }
 
 .user-circle {
     width: 50px;
+    min-width: 50px;
     height: 50px;
     border-radius: 50%;
     background-color: #ccc;
     background-size: cover;
     background-position: center;
-    position: absolute;
-    bottom: 10px;
-    margin-left: -5px
 }
 
 #user-name {
@@ -164,6 +206,7 @@ header {
 main {
     flex-grow: 1;
     padding: 20px;
+    padding-top: 100px;
     background-color: #fff;
 }
 
