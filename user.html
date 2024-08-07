@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>User | Radium</title>
+    <title>Radium</title>
     <link rel="stylesheet" href="./styles/user.css">
     <script src="https://kit.fontawesome.com/a47fae704c.js" crossorigin="anonymous"></script>
-    <link rel="icon" href="./assets/San-Ti (1).png" type="image/png">
+    <link rel="icon" href="./assets/Neutron-1.png" type="image/png">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,300;0,400;0,700;0,900;1,300;1,400;1,700;1,900&display=swap" rel="stylesheet">
@@ -26,25 +26,44 @@
     <div id="container" class="container">
         <aside class="sidebar">
             <!--<div class="logo">MyBlog</div>-->
-            <nav>
+            <nav class="desktop-nav">
                 <ul>
-                    <li><a href="index.html"><img src="./assets/home-home-svgrepo-com.svg" alt="Home"></a></li>
-                    <li><a href="index.html"><img src="./assets/svgexport-6.svg" alt="Icon 1"></a></li>
-                    <li><a href="index.html"><img src="./assets/svgexport-8.svg" alt="Icon 2"></a></li>
-                    <li><a href="index.html"><img src="./assets/svgexport-9.svg" alt="Icon 3"></a></li>
+                    <li><a href="index.html"><img src="./assets/home-home-svgrepo-com.svg"></a></li>
+                    <li><a href="index.html"><img src="./assets/svgexport-6.svg"></a></li>
+                    <li><a href="index.html"><img src="./assets/svgexport-8.svg"></a></li>
+                    <li><a href="index.html"><img src="./assets/svgexport-9.svg"></a></li>
+                    <!--<li><a href="sign-up.html">Sign Up</a></li>
+                    <li><a href="log-in.html">Log In</a></li>-->
                     <hr>
-                    <li><a href="create-post.html"><img src="./assets/svgexport-4.svg" alt="Create Post"></a></li>
+                    <li><a href="create-post.html"><img src="./assets/svgexport-4.svg"></a></li>
                 </ul>
                 <a href="profile-edit.html" class="user-info">
                     <div class="user-circle" id="profile-pic"></div>
                     <span style="display: none;" id="user-name"></span>
                 </a>
             </nav>
+
+            <nav class="mobile-nav">
+                <ul>
+                    <li><a href="index.html"><img class="this-page-selects" src="./assets/home-home-svgrepo-com.svg" alt="Home"></a></li>
+                    <li class="mobile-no-display"><a href="index.html"><img src="./assets/svgexport-6.svg" alt="Icon 1"></a></li>
+                    <li><a class="article-selects" href="index.html"><img src="./assets/svgexport-8.svg" alt="Icon 2"></a></li>
+                    <li class="mobile-no-display"><a href="index.html"><img src="./assets/svgexport-9.svg" alt="Icon 3"></a></li>
+                    <li><a href="create-post.html"><img src="./assets/svgexport-4.svg" alt="Create Post"></a></li>
+                    <a href="profile-edit.html" class="user-info">
+                        <div class="user-circle" id="profile-mobile-pic"></div>
+                        <span style="display: none;" id="user-name"></span>
+                    </a>
+                </ul>
+            </nav>
         </aside>
         <div class="main-content">
-            <!--<header>
-                <img src="logo.png" alt="LOGz Logo">
-            </header>-->
+            <header>
+                <div class="search-bar">
+                    <img src="assets/svgexport-3.svg">
+                    <input type="text" id="search-input" autocomplete="off" placeholder="Search">
+                </div>
+            </header>
             <main>
                 <div class="overlay" id="overlay"></div>
 
@@ -93,10 +112,10 @@
                                         </span>
                                     </h1>
                                     <span id="user-followers"></span>
-                                    <p id="user-about"></p>    
+                                    <p id="user-about"></p>   
                                 </div>  
-                                <button id="follow-user-btn">Follow</button>
                                 <img id="notifications-svg" class="notifications-svg" src="./assets/settings.svg">
+                                <button id="follow-user-btn">Follow</button>
                             </div>
                             
                             <!--<div class="user-content-about" id="user-content-about">
