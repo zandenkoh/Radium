@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Profile | Radium</title>
+    <title>Radium</title>
     <link rel="stylesheet" href="./styles/profile-edit.css">
     <script src="https://kit.fontawesome.com/a47fae704c.js" crossorigin="anonymous"></script>
-    <link rel="icon" href="./assets/San-Ti (1).png" type="image/png">
+    <link rel="icon" href="./assets/Neutron-1.png" type="image/png">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,300;0,400;0,700;0,900;1,300;1,400;1,700;1,900&display=swap" rel="stylesheet">
@@ -87,12 +87,18 @@
                             <div class="inside-user-content-profile">
                                 <div class="profile-content-image" id="profile-content-pic"></div>
                                 <div class="profile-name-about">
-                                    <h1 id="user-name-large"></h1>
+                                    <!--<h1 id="user-name-large"></h1>-->
+                                    <h1 id="user-name-large">
+                                        <span id="user-name-text"></span>
+                                        <span id="verified-badge" style="display: none;">
+                                            <img src="./assets/twitter-verified-badge.svg" alt="Verified">
+                                        </span>
+                                    </h1>
                                     <span id="user-followers"></span>
                                     <p id="user-about"></p>    
                                 </div>
                                 <button id="edit-user-btn"><!--<i class="fa-solid fa-pen"></i> -->Profile</button>
-                                <img class="settings-svg" src="./assets/settings.svg">
+                                <!--<img class="settings-svg" src="./assets/settings.svg">-->
                             </div>
                             <!--<div class="user-content-about" id="user-content-about">
                                 <p id="user-about"></p>
@@ -104,7 +110,7 @@
                     <div class="user-main">
                         <!--<hr class="between-info-article">-->
                         <section id="user-articles">
-                            <h2 id="article-user">Articles</h2>
+                            <h2 id="article-user">Articles written by you</h2>
                             <div id="articles-container"></div>
                         </section>
                     </div>
