@@ -1,139 +1,3 @@
-/*// scripts/article.js
-document.addEventListener('DOMContentLoaded', function() {
-    const urlParams = new URLSearchParams(window.location.search);
-    const articleId = urlParams.get('id'); // Get article ID from URL
-
-    if (articleId) {
-        const db = firebase.firestore();
-        const articleRef = db.collection('posts').doc(articleId);
-
-        articleRef.get().then((doc) => {
-            if (doc.exists) {
-                const data = doc.data();
-                document.getElementById('article-title').textContent = data.title;
-                document.getElementById('article-content').textContent = data.content;
-
-                if (data.imageUrl) {
-                    const imageElement = document.getElementById('article-image');
-                    imageElement.src = data.imageUrl;
-                    imageElement.style.display = 'block';
-                }
-            } else {
-                console.log('No such document!');
-                // Handle case where article does not exist
-            }
-        }).catch((error) => {
-            console.error('Error getting document:', error);
-        });
-    } else {
-        console.log('No article ID in URL');
-        // Handle case where no article ID is provided
-    }
-});
-*/
-/*
-document.addEventListener('DOMContentLoaded', async function() {
-    const params = new URLSearchParams(window.location.search);
-    const articleId = params.get('id');
-
-    if (!articleId) {
-        document.getElementById('article-container').innerHTML = '<p>Invalid article ID.</p>';
-        return;
-    }
-
-    try {
-        const doc = await firebase.firestore().collection('posts').doc(articleId).get();
-
-        if (!doc.exists) {
-            document.getElementById('article-container').innerHTML = '<p>Article not found.</p>';
-            return;
-        }
-
-        const data = doc.data();
-        const userDoc = await firebase.firestore().collection('users').doc(data.authorId).get();
-        const authorData = userDoc.data();
-
-        const articleContainer = document.getElementById('article-container');
-        articleContainer.innerHTML = `
-            <h1>${data.title}</h1>
-            <div class="author-info">
-                <img src="${authorData.profilePicture || './assets/default-profile-pic.jpg'}" alt="Author" class="author-pic">
-                <div class="author-details">
-                    <span class="author-name">${authorData.name || 'Unknown Author'}</span>
-                    <span class="publish-date">${data.timestamp ? new Date(data.timestamp.seconds * 1000).toLocaleDateString() : 'Unknown Date'}</span>
-                </div>
-            </div>
-            <div class="article-content">${data.content}</div>
-            ${data.imageUrl ? `<img src="${data.imageUrl}" alt="Article Image" class="article-image">` : ''}
-        `;
-    } catch (error) {
-        console.error('Error fetching article:', error);
-        document.getElementById('article-container').innerHTML = '<p>Error loading article. Please try again later.</p>';
-    }
-});
-*/
-
-
-/*
-// Initialize Firebase
-const firebaseConfig = {
-    apiKey: "AIzaSyBsG6KOqNFSmgmW5FFdEdnvIegKYFdaFko",
-    authDomain: "logz-6b051.firebaseapp.com",
-    projectId: "logz-6b051",
-    storageBucket: "logz-6b051.appspot.com",
-    messagingSenderId: "821932097794",
-    appId: "1:821932097794:web:0bfc112f5ccdd12b39421b"
-};
-firebase.initializeApp(firebaseConfig);
-
-const firestore = firebase.firestore();
-
-// Function to fetch and display the article
-const displayArticle = () => {
-    const urlParams = new URLSearchParams(window.location.search);
-    const postId = urlParams.get('id');
-
-    if (postId) {
-        firestore.collection('posts').doc(postId).get().then((doc) => {
-            if (doc.exists) {
-                const data = doc.data();
-                document.getElementById('article-title').textContent = data.title || 'Untitled';
-                document.getElementById('article-content').innerHTML = formatContent(data.content);
-            } else {
-                console.log('No such document!');
-            }
-        }).catch((error) => {
-            console.log('Error getting document:', error);
-        });
-    }
-};
-
-// Function to format content for HTML
-const formatContent = (content) => {
-    // Replace new lines with <br> for HTML display
-    return content.replace(/\n/g, '<br>');
-};
-
-// Call the function to display the article when the page loads
-document.addEventListener('DOMContentLoaded', displayArticle);
-*/
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 // Initialize Firebase
 const firebaseConfig = {
     apiKey: "AIzaSyBsG6KOqNFSmgmW5FFdEdnvIegKYFdaFko",
@@ -693,6 +557,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
 
+
 /*
 // Call the functions to display the article and user profile picture when the page loads
 document.addEventListener('DOMContentLoaded', () => {
@@ -1029,6 +894,17 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         }, 500); // Delay to allow the initial smooth scroll to complete
     });
+
+    const searchInput = document.getElementById('search-input');
+        // Add event listener for Enter key on search input
+        searchInput.addEventListener('keypress', (event) => {
+            if (event.key === 'Enter') {
+                const searchQuery = searchInput.value.trim();
+                if (searchQuery) {
+                    window.location.href = `search.html?search_query=${encodeURIComponent(searchQuery)}`;
+                }
+            }
+        });
 });
 
 
@@ -1167,3 +1043,30 @@ document.addEventListener('DOMContentLoaded', () => {
         return urlParams.get('id');
     }
 });
+
+document.addEventListener('DOMContentLoaded', function() {
+    const header = document.querySelector('header');
+    let lastScrollTop = 0;
+    const headerHeight = header.offsetHeight;
+
+    window.addEventListener('scroll', function() {
+        const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+        const scrollDelta = scrollTop - lastScrollTop;
+        const currentTransform = getComputedStyle(header).transform;
+        const currentTransformY = currentTransform !== 'none' ? parseInt(currentTransform.split(',')[5]) : 0;
+
+        if (scrollDelta > 0) {
+            // Scrolling down
+            const newTransformY = Math.max(-headerHeight, currentTransformY - scrollDelta);
+            header.style.transform = `translateY(${newTransformY}px)`;
+        } else if (scrollDelta < 0) {
+            // Scrolling up
+            const newTransformY = Math.min(0, currentTransformY - scrollDelta);
+            header.style.transform = `translateY(${newTransformY}px)`;
+        }
+
+        lastScrollTop = scrollTop;
+    });
+});
+
+
