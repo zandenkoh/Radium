@@ -25,7 +25,7 @@ const firebaseConfig = {
         fetchUserProfile(user.uid); // Pass user ID here
         loadArticlesByFilter('all');
     } else {
-        window.location.href = 'log-in.html'; // Redirect if not authenticated
+        window.location.href = 'join.html'; // Redirect if not authenticated
     }
   });
   
@@ -177,12 +177,13 @@ const firebaseConfig = {
   
   document.addEventListener('DOMContentLoaded', () => {
     const tabs = document.querySelectorAll('.tab');
-  
+    const searchInput = document.getElementById('search-input');
+
     // Update tabs based on URL parameters
     const urlParams = new URLSearchParams(window.location.search);
     const activeTab = urlParams.get('tabId') || 'all'; // Default to 'all' if no tabId is specified
     updateActiveTab(activeTab);
-  
+
     // Add click event listeners to tabs
     tabs.forEach(tab => {
         tab.addEventListener('click', () => {
@@ -194,12 +195,22 @@ const firebaseConfig = {
             loadArticlesByFilter(filter); // Load articles based on selected filter
         });
     });
-  
+
     // Initial load based on URL filter
     loadArticlesByFilter(activeTab);
-  });
-  
-  const updateActiveTab = (filter) => {
+
+    // Add event listener for Enter key on search input
+    searchInput.addEventListener('keypress', (event) => {
+        if (event.key === 'Enter') {
+            const searchQuery = searchInput.value.trim();
+            if (searchQuery) {
+                window.location.href = `search.html?search_query=${encodeURIComponent(searchQuery)}`;
+            }
+        }
+    });
+});
+
+const updateActiveTab = (filter) => {
     const tabs = document.querySelectorAll('.tab');
     tabs.forEach(tab => {
         if (tab.textContent.toLowerCase() === filter) {
@@ -208,7 +219,8 @@ const firebaseConfig = {
             tab.classList.remove('active');
         }
     });
-  };
+};
+
   
 /*
 window.addEventListener('scroll', adjustMobileNav);
@@ -237,3 +249,29 @@ function adjustMobileNav() {
         mobileNav.style.transform = 'translateY(0)';
     }
 }
+
+
+document.addEventListener('DOMContentLoaded', function() {
+    const header = document.querySelector('header');
+    let lastScrollTop = 0;
+    const headerHeight = header.offsetHeight;
+
+    window.addEventListener('scroll', function() {
+        const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+        const scrollDelta = scrollTop - lastScrollTop;
+        const currentTransform = getComputedStyle(header).transform;
+        const currentTransformY = currentTransform !== 'none' ? parseInt(currentTransform.split(',')[5]) : 0;
+
+        if (scrollDelta > 0) {
+            // Scrolling down
+            const newTransformY = Math.max(-headerHeight, currentTransformY - scrollDelta);
+            header.style.transform = `translateY(${newTransformY}px)`;
+        } else if (scrollDelta < 0) {
+            // Scrolling up
+            const newTransformY = Math.min(0, currentTransformY - scrollDelta);
+            header.style.transform = `translateY(${newTransformY}px)`;
+        }
+
+        lastScrollTop = scrollTop;
+    });
+});
