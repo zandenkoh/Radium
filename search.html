@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Radium</title>
+    <link rel="stylesheet" href="./styles/search.css">
+    <link rel="stylesheet" href="./styles/index.css">
+    <link rel="icon" href="./assets/Neutron-1.png" type="image/png">
+</head>
+<body>
+
+    <div class="container">
+        <aside class="sidebar">
+            <!--<div class="logo">MyBlog</div>-->
+            <nav class="desktop-nav">
+                <ul>
+                    <li><a href="index.html"><img src="./assets/home-home-svgrepo-com.svg" alt="Home"></a></li>
+                    <li class="mobile-no-display"><a href="index.html"><img src="./assets/svgexport-6.svg" alt="Icon 1"></a></li>
+                    <li class="mobile-no-display"><a href="index.html"><img src="./assets/svgexport-8.svg" alt="Icon 2"></a></li>
+                    <li class="mobile-no-display"><a href="index.html"><img src="./assets/svgexport-9.svg" alt="Icon 3"></a></li>
+                    <hr>
+                    <li><a href="create-post.html"><img src="./assets/svgexport-4.svg" alt="Create Post"></a></li>
+                </ul>
+                <a href="profile-edit.html" class="user-info">
+                    <div class="user-circle" id="profile-pic"></div>
+                    <span style="display: none;" id="user-name"></span>
+                </a>
+            </nav>
+
+            <nav class="mobile-nav" id="mobile-nav">
+                <ul>
+                    <li><a href="index.html"><img class="this-page-selects" src="./assets/home-home-svgrepo-com.svg" alt="Home"></a></li>
+                    <li class="mobile-no-display"><a href="index.html"><img src="./assets/svgexport-6.svg" alt="Icon 1"></a></li>
+                    <li><a href="index.html"><img src="./assets/svgexport-8.svg" alt="Icon 2"></a></li>
+                    <li class="mobile-no-display"><a href="index.html"><img src="./assets/svgexport-9.svg" alt="Icon 3"></a></li>
+                    <hr>
+                    <li><a href="create-post.html"><img src="./assets/svgexport-4.svg" alt="Create Post"></a></li>
+                    <a href="profile-edit.html" class="user-info">
+                        <div class="user-circle" id="profile-mobile-pic"></div>
+                        <span style="display: none;" id="user-name"></span>
+                    </a>
+                </ul>
+            </nav>
+        </aside>
+        
+        <div class="main-content">
+            <header>
+                <div class="search-bar">
+                    <img src="assets/svgexport-3.svg">
+                    <input type="text" id="search-input" autocomplete="off" placeholder="Search">
+                </div>
+            </header>
+
+            <main>
+                <!--<div class="tabs">
+                    <button class="tab" data-filter="all">All</button>
+                    <button class="tab" data-filter="technology">Technology</button>
+                    <button class="tab" data-filter="radium">Radium</button>
+                </div>
+                <h1 style="display: none;" id="welcome-message">Welcome</h1>-->
+                <h1 id="results-header"></h1>
+                <div class="tabs">
+                    <button class="tab" id="tab-stories" onclick="showStories()">Stories</button>
+                    <button class="tab" id="tab-people" onclick="showPeople()">People</button>
+                </div>
+                <div id="search-results-container">
+                    <!-- Articles will be dynamically inserted here -->
+                </div>
+                <div id="user-results-container" style="display: none;">
+                    <!-- User profiles will be dynamically inserted here -->
+                </div>
+                <div id="load-more-trigger"></div>
+            </main>
+        </div>
+    </div>
+    
+    <script src="https://www.gstatic.com/firebasejs/8.2.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.2.1/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.2.1/firebase-firestore.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.2.1/firebase-storage.js"></script>
+    <script src="scripts/search.js"></script>
+    
+    <script>
+      // Your web app's Firebase configuration
+      const firebaseConfig = {
+        apiKey: "AIzaSyBsG6KOqNFSmgmW5FFdEdnvIegKYFdaFko",
+        authDomain: "logz-6b051.firebaseapp.com",
+        projectId: "logz-6b051",
+        storageBucket: "logz-6b051.appspot.com",
+        messagingSenderId: "821932097794",
+        appId: "1:821932097794:web:0bfc112f5ccdd12b39421b"
+      };
+    
+      // Initialize Firebase
+      firebase.initializeApp(firebaseConfig);
+    </script>
+</body>
+</html>
