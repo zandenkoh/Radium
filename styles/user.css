@@ -9,13 +9,15 @@ body {
     background: #f6f6f6;
 }
 
-header {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 50px;
-    background: #ffffff;
+.sidebar-logo {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    margin-left: 0;
+    margin-bottom: 0;
+    margin-top: 15px;
+    align-items: center;
+    display: none;
 }
 
 .sidebar {
@@ -31,6 +33,18 @@ header {
     padding: 20px;
 }
 
+.desktop-nav {
+    display: block;
+}
+
+.mobile-nav {
+    display: none;
+}
+
+.mobile-no-display {
+    display: block;
+}
+
 .logo {
     font-size: 24px;
     font-weight: bold;
@@ -42,6 +56,8 @@ header {
 .sidebar nav ul {
     list-style-type: none;
     text-align: center;
+    padding: 0;
+    margin-top: 10vh;
 }
 
 .sidebar nav ul li {
@@ -70,7 +86,9 @@ header {
 }
 
 .sidebar hr {
-    border: 0.5px solid #c8c8c8;
+    border: 0.5px solid #e4e4e4;
+    width: 70%;
+    margin-left: 20%;
 }
 
 .user-info {
@@ -90,6 +108,12 @@ header {
     margin-left: -5px
 }
 
+#user-name {
+    font-weight: bold;
+    font-size: 16px;
+    color: #000;
+}
+
 .main-content {
     flex-grow: 1;
     display: flex;
@@ -98,14 +122,63 @@ header {
     padding-left: 80px;
 }
 
+main {
+    padding-top: 60px;
+}
+
 header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 10px 20px;
+    padding: 10px 0;
     background-color: #fff;
     border-bottom: 2px solid #e7e7e7;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    /*box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);*/
+    position: fixed;
+    width: 100%;
+    z-index: 1000;
+    transition: 0s ease-in-out;
+}
+
+header.hidden {
+    transform: translateY(-80px);
+    transition: 0s ease-in-out;
+}
+
+.search-bar {
+    margin-left: 50%;
+    transform: translateX(-58%);
+    align-items: center;
+}
+
+.search-bar img {
+    width: 22px;
+    height: 22px;
+    position: absolute;
+    margin-top: 8px;
+    margin-left: 17px;
+}
+
+.search-bar input {
+    padding: 12px 25px;
+    padding-left: 50px;
+    border: none;
+    border-radius: 20px;
+    width: 600px;
+    outline: none;
+    transition: border 0.3s;
+    background: #f9f9f9;
+    font-size: 14px;
+    color: #757575;
+}
+
+.search-bar:focus-within input {
+    background: #f3f3f3;
+    color: #000;
+}
+
+.search-bar:focus-within img {
+    filter: invert(33%) saturate(200%) hue-rotate(323deg) brightness(95%) contrast(1050%);
 }
 
 .container {
@@ -435,7 +508,7 @@ i {
     font-family: "Roboto";
     font-weight: 400;
     text-wrap: wrap;
-    width: 94%;
+    width: 100%;
 }
 
 
@@ -446,7 +519,8 @@ i {
 #follow-user-btn {
     margin-top: 0;
     padding: 9px 10px;
-    width: 180px;
+    width: 140px;
+    min-width: 140px;
     border-radius: 50px;
     color: #fff;
     border: 1px solid #000;
@@ -454,7 +528,8 @@ i {
     background: #000;
     user-select: none;
     height: 40px;
-    transition: ease-in-out 0.12s;
+    transition: ease-in-out background 0.12s;
+    margin-left: 50px;
 }
 
 #follow-user-btn:hover {
@@ -466,9 +541,12 @@ i {
 
 #follow-user-btn.unfollow-btn {
     background: transparent;
-    color: #454545;
-    border: 1px solid #454545;
-    transition: ease-in-out 0.12s;
+    color: #000;
+    border: 1px solid #838383;
+    transition: ease-in-out background 0.12s;
+    width: 140px;
+    min-width: 140px;
+    margin-left: 0;
 }
 
 #follow-user-btn.unfollow-btn:hover {
@@ -485,12 +563,17 @@ i {
     width: 40px;
     height: 40px;
     padding: 9px;
-    border: 1px solid #454545;
+    border: 1px solid #8f8f8f;
     border-radius: 50%;
     cursor: pointer;
     margin-top: 0;
-    margin-left: 10px;
+    margin-right: 10px;
     display: none;
+    filter: invert(33%) saturate(200%) hue-rotate(323deg) brightness(95%) contrast(1050%);
+}
+
+.notifications-svg {
+
 }
 
 .notifications-svg:hover {
