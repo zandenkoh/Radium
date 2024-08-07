@@ -625,6 +625,11 @@ button:hover {
 
 
 @media (max-width: 900px) {
+    body {
+        overflow-x: hidden;
+        overflow-y: scroll;
+    }
+    
     .main-content {
         width: 90%;
         padding: 20px;
