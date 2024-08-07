@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Join Radium</title>
+    <link rel="stylesheet" href="./styles/index.css">
+    <link rel="stylesheet" href="./styles/signup-login.css">
+    <link rel="icon" href="./assets/Neutron-1.png" type="image/png">
+</head>
+<body>
+    <div class="overlay" id="overlay"></div>
+    <div class="container">   
+        <img class="container-image" src="assets/Neutron-2.png">     
+        <div class="main-content">
+            <!--<div class="top-image-container">
+                <img class="top-image-container-image" src="assets/San-Ti (2).png">        
+            </div>-->
+            <div class="header-container">
+                <img class="header-container-image" src="assets/Neutron-1.png">
+                <h1></h1>
+            </div>
+            <div class="sign-up-container">
+                <h1>Join Radium today.</h1>
+                <button class="create-account-button" id="create-account-button">Create account</button>
+                
+                <div class="horizontal-line-container">
+                    <hr class="line">
+                    <span class="text">or</span>
+                    <hr class="line">
+                </div>
+                <button class="sign-in-button" id="sign-in-button">Sign in</button>
+                <span class="terms-conditions">By signing up or logging in, you agree to the <a href="join.html">Terms of Service</a> and <a href="join.html">Privacy Policy</a>, including <a href="join.html">Cookie Use</a></span>
+            </div>
+            <div class="log-in-suggestion-container">
+
+            </div>
+        </div>
+    </div>
+
+    <div class="sign-in-form" id="sign-in-form">
+        <div class="sign-in-form-header">
+            <img class="close-button" id="close-button" src="assets/svgexport-21.svg">
+            <img class="logo" src="assets/Neutron-1.png">
+        </div>
+        <div class="sign-in-form-main">
+            <h1>Sign in to Radium</h1>
+            <!--<input type="email" class="email-input" id="email" placeholder="Email" autocomplete="off" required>
+            <input type="password" class="password-input" id="password" placeholder="Password" autocomplete="off" required>
+            <a href="index.html">Forgot password?</a>
+            <button class="sign-in-login-button" id="sign-in-login-button" type="submit">Log in</button>-->
+            <form id="sign-in-form-submit">
+                <input type="email" class="email-input" id="email" name="email" placeholder="Email" autocomplete="off" required>
+                <input type="password" class="password-input" id="password" name="password" placeholder="Password" autocomplete="off" required>
+                <a href="join.html">Forgot password?</a>
+                <button type="submit" class="sign-in-login-button" id="log-in-button" type="submit">Log in</button>
+            </form>
+            <div id="error-message" class="error-message" style="color: red;"></div>
+            <!--<button class="sign-in-forgot-button" id="sign-in-forgot-button">Forgot password?</button>-->
+        </div>
+    </div>
+
+    <div class="profile-content" id="profile-content">
+        <div class="sign-in-form-header">
+            <img class="close-button" id="close-c-button" src="assets/svgexport-21.svg">
+            <img class="logo" src="assets/Neutron-1.png">
+        </div>
+        <!-- Step 1: Name -->
+        <div class="step" id="step-1">
+            <form>
+                <h1>Create your account</h1>
+                <input type="name" name="create-name" id="profile-name" placeholder="Name" autocomplete="off" required>
+                <input type="email" name="create-email" id="profile-email" placeholder="Email" autocomplete="off" required>
+                
+                <p class="form-span">Date of birth</p>
+                <p class="form-p">This will not be shown publicly. Confirm your own age, even if this account is for a business, a pet, or something else.</p>
+                <!--<input type="date" name="create-date" id="profile-date" placeholder="Date of birth" autocomplete="off" required>-->
+                <div class="date-input-container">
+                    <input type="date" name="create-date" id="profile-date" placeholder="Date of birth" autocomplete="off" required>
+                    <span class="input-icon" aria-hidden="true"></span>
+                </div>
+                <button id="next-step-1">Next</button>
+            </form>
+        </div>
+
+        <!-- Step 2: Password -->
+        <div class="step" id="step-2" style="display: none;">
+            <form>
+                <h1>Secure your account</h1>
+                <p class="form-span-p">Enter a password</p>
+                <input id="profile-password" style="border: 1px solid #ddd;" type="password" placeholder="Password" required maxlength="30">
+                <button id="next-step-2">Next</button>
+            </form>
+        </div>
+
+        <!-- Step 3: Bio -->
+        <div class="step" id="step-3" style="display: none;">
+            <form>
+                <h1>Who are you?</h1>
+                <p class="form-span">Tell us about yourself</p>
+                <textarea id="profile-bio" placeholder="Enter a short bio" required maxlength="300"></textarea>
+                <div id="char-count">300/300</div>
+                <button id="next-step-3">Next</button>
+            </form>
+        </div>
+
+        <!-- Step 4: Profile Image -->
+        <div class="step" id="step-4" style="display: none;">
+            <h2 class="last-h1">Complete your profile</h2>
+            <p class="form-new">Upload your profile picture to continue</p>
+            <img id="profile-image" src="https://i.pinimg.com/474x/81/8a/1b/818a1b89a57c2ee0fb7619b95e11aebd.jpg" class="profile-image">
+            <button id="change-image-btn">Click to upload</button>
+            <input type="file" id="image-upload" style="display: none;" required>
+            <button id="sign-up-btn" style="display: block;">Sign up</button>
+        </div>
+
+        <p id="please-ensure" style="display: none;">To create your account, please upload your profile picture.</p>
+    </div>
+
+
+    <!-- Add Firebase SDK scripts to your HTML files -->
+    <script src="https://www.gstatic.com/firebasejs/8.2.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.2.1/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.2.1/firebase-firestore.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.2.1/firebase-storage.js"></script>
+    
+    <script src="scripts/signup-login.js"></script>
+    
+    <script>
+
+      // Your web app's Firebase configuration
+      const firebaseConfig = {
+        apiKey: "AIzaSyBsG6KOqNFSmgmW5FFdEdnvIegKYFdaFko",
+        authDomain: "logz-6b051.firebaseapp.com",
+        projectId: "logz-6b051",
+        storageBucket: "logz-6b051.appspot.com",
+        messagingSenderId: "821932097794",
+        appId: "1:821932097794:web:0bfc112f5ccdd12b39421b"
+      };
+    
+      // Initialize Firebase
+      firebase.initializeApp(firebaseConfig);
+    </script>
+</body>
+</html>
