@@ -6,7 +6,7 @@
     <meta name="google" content="notranslate">
     <title>Radium</title>
     <link rel="stylesheet" href="./styles/article.css">
-    <link rel="icon" href="./assets/San-Ti (1).png" type="image/png">
+    <link rel="icon" href="./assets/Neutron-1.png" type="image/png">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Roboto+Flex:opsz,wght@8..144,100..1000&display=swap" rel="stylesheet">
@@ -58,59 +58,75 @@
         </aside>
         
         <div class="main-content">
-            <!--<header>
+            <header>
                 <div class="search-bar">
-                    <input type="text" placeholder="Search...">
+                    <img src="assets/svgexport-3.svg">
+                    <input type="text" id="search-input" autocomplete="off" placeholder="Search">
                 </div>
-                <div class="header-icons">
-                    <div class="icon">+</div>
-                </div>
-            </header>-->
+            </header>
             
             <main>
-                <div id="skeleton-loader">
-                    <div class="skeleton skeleton-title"></div>
-                    <div class="skeleton skeleton-author"></div>
-                    <div class="skeleton skeleton-image"></div>
-                    <div class="skeleton skeleton-text"></div>
-                    <div class="skeleton skeleton-text"></div>
-                    <div class="skeleton skeleton-text"></div>
-                    <div class="skeleton skeleton-echo"></div>
+                <div class="inside-main">
+                    <div id="skeleton-loader">
+                        <div class="skeleton skeleton-title"></div>
+                        <div class="skeleton skeleton-author"></div>
+                        <div class="skeleton skeleton-image"></div>
+                        <div class="skeleton skeleton-text"></div>
+                        <div class="skeleton skeleton-text"></div>
+                        <div class="skeleton skeleton-echo"></div>
+                    </div>
+    
+                    <h1 id="article-title"></h1>
+                    <p id="article-topic" style="display: none;"></p>
+                    <div id="article-author"></div>
+                    <hr class="seperate" style="display: none;">
+                    <div class="article-features" id="article-features">
+                        <div class="clap-item">
+                            <img src="assets/slap-1.svg" alt="clap" class="clap-comment-img">
+                            <span id="echo-count" class="count">0</span>
+                        </div>
+                        <div id="comment-item" class="comment-item">
+                            <img src="assets/comment.svg" alt="comment" class="clap-comment-img">
+                            <span id="comments-count" class="count">0</span>
+                        </div>
+                        <div class="spacer"></div>
+                        <img src="assets/share-export.svg" alt="share" class="feature-icon">
+                        <img src="assets/svgexport-18.svg" alt="save" class="feature-icon">
+                        <img src="assets/ellipsis.svg" alt="more" class="feature-icon">
+                    </div>
+                    <hr class="seperate-2" style="display: none;">
+                    <img id="article-image" alt="">
+                    <p id="article-content"></p>
+                    <!--<div class="container" id="article-container">
+                    </div>-->
+                    <div class="article-actions">
+                        <button class="clap-button" id="echo-button-bottom">
+                            <img src="assets/slap-1.svg" alt="clap" class="action-icon">
+                            <span id="echo-button-span">Echo</span>
+                        </button>
+                        <button id="comment-button" class="comment-button">
+                            <img src="assets/comment.svg" alt="comment" class="action-icon">
+                            <span lang="en">Comment</span>
+                        </button>
+                    </div>
                 </div>
 
-                <h1 id="article-title"></h1>
-                <p id="article-topic" style="display: none;"></p>
-                <div id="article-author"></div>
-                <hr class="seperate" style="display: none;">
-                <div class="article-features" id="article-features">
-                    <div class="clap-item">
-                        <img src="assets/slap-1.svg" alt="clap" class="clap-comment-img">
-                        <span id="echo-count" class="count">0</span>
+                <!-- Sidebar container -->
+                    <div class="sidebar-container">
+                        <div class="sidebar-icon">
+                            <img style="width: 18px; height: 18px;" src="assets/pencil-svgrepo-com.svg" alt="Icon 1">
+                        </div>
+                        <div class="sidebar-icon">
+                            <img src="assets/comment.svg" alt="Icon 2">
+                        </div>
+                        <div class="sidebar-icon">
+                            <img src="assets/book-mark-icon.svg" alt="Icon 3">
+                        </div>
+                        <div class="sidebar-icon">
+                            <img src="assets/ellipsis.svg" alt="Icon 4">
+                        </div>
                     </div>
-                    <div id="comment-item" class="comment-item">
-                        <img src="assets/comment.svg" alt="comment" class="clap-comment-img">
-                        <span id="comments-count" class="count">0</span>
-                    </div>
-                    <div class="spacer"></div>
-                    <!--<img src="assets/share-export.svg" alt="share" class="feature-icon">
-                    <img src="assets/svgexport-18.svg" alt="save" class="feature-icon">
-                    <img src="assets/ellipsis.svg" alt="more" class="feature-icon">-->
-                </div>
-                <hr class="seperate-2" style="display: none;">
-                <img id="article-image" alt="">
-                <p id="article-content"></p>
-                <!--<div class="container" id="article-container">
-                </div>-->
-                <div class="article-actions">
-                    <button class="clap-button" id="echo-button-bottom">
-                        <img src="assets/slap-1.svg" alt="clap" class="action-icon">
-                        <span id="echo-button-span">Echo</span>
-                    </button>
-                    <button id="comment-button" class="comment-button">
-                        <img src="assets/comment.svg" alt="comment" class="action-icon">
-                        <span lang="en">Comment</span>
-                    </button>
-                </div>
+
             </main>
 
             <div class="after-article-profile">
