@@ -273,6 +273,9 @@ document.addEventListener('DOMContentLoaded', function () {
     const profileContent = document.getElementById('profile-content');
     const pleaseEnsure = document.getElementById('please-ensure');
 
+    const signUpButton = document.getElementById('sign-up-btn');
+    signUpButton.disabled = true;
+
     // Show the profile content when the "Create account" button is clicked
     document.getElementById('create-account-button').addEventListener('click', function () {
         profileContent.style.display = 'block';
@@ -327,6 +330,8 @@ document.addEventListener('DOMContentLoaded', function () {
                 document.getElementById('profile-image').src = e.target.result;
             };
             reader.readAsDataURL(file);
+
+            signUpButton.disabled = false;
         }
     });
 
