@@ -190,8 +190,9 @@ main h1 {
     border: none;
     width: 100%;
     background: #fff;
+    color: #000;
     outline: none;
-    font-size: 25px;
+    font-size: 28px;
     font-family: "Merriweather", serif;
     font-weight: 600;
     margin-bottom: -16px;
@@ -202,7 +203,11 @@ main h1 {
 }
 
 .form-group #title::placeholder {
-    color: #3a3a3a;
+    color: #8a8a8a;
+}
+
+.form-group #title:focus::placeholder {
+    color: #454545;
 }
 
 .form-group #description {
@@ -210,15 +215,23 @@ main h1 {
     border: none;
     width: 100%;
     background: #fff;
-    color: #6c6c6c;
+    color: #000;
     outline: none;
     font-size: 22px;
     font-family: "Merriweather", serif;
-    font-weight: 300;
+    font-weight: 100;
     margin-bottom: -16px;
     line-height: 1.5; /* Adjust based on your font size and design */
     min-height: 1.5em; /* This should match the line-height value */
     resize: none; /* Disable manual resizing */
+}
+
+.form-group #description::placeholder {
+    color: #8a8a8a;
+}
+
+.form-group #description:focus::placeholder {
+    color: #454545;
 }
 
 .form-group #content {
@@ -226,6 +239,7 @@ main h1 {
     border: none;
     width: 100%;
     background: #fff;
+    color: #000;
     border: none;
     outline: none;
     font-size: 22px;
@@ -235,6 +249,14 @@ main h1 {
     line-height: 1.6;
     min-height: 1.5em;
     resize: none;
+}
+
+.form-group #content::placeholder {
+    color: #8a8a8a;
+}
+
+.form-group #content:focus::placeholder {
+    color: #454545;
 }
 
 .form-group #content::-webkit-scrollbar {
