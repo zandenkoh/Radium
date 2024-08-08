@@ -41,6 +41,7 @@ body {
 .sidebar nav ul {
     list-style-type: none;
     text-align: center;
+    margin-top: 10vh;
 }
 
 .sidebar nav ul li {
@@ -258,13 +259,13 @@ main h1 {
     margin-bottom: 20px;
 }
 
-.submit-button {
+.submit-next-button {
     font-family: "Roboto";
-    padding: 10px 55px;
+    padding: 9px 55px;
     padding-top: 12px;
-    border: none;
-    background-color: #fff;
+    background-color: transparent;
     color: #797979;
+    /*border: none;*/
     border: 1px solid #797979;
     border-radius: 50px;
     cursor: pointer;
@@ -273,15 +274,42 @@ main h1 {
     left: 50%;
     transform: translateX(-50%);
     margin-top: 200px;
-    transition: 0.2s ease;
+    transition: 0s ease-in-out;
+}
+
+.submit-next-button:hover {
+    /*border: 1px solid #454545;
+    color: #454545;*/
+    background-color: #f9f9f9;
+}
+
+.submit-button {
+    font-family: "Roboto";
+    padding: 10px 55px;
+    padding-top: 12px;
+    /*background-color: #fff;*/
+    color: #fff;
+    border: none;
+    /*border: 1px solid #797979;*/
+    border-radius: 70px;
+    cursor: pointer;
+    letter-spacing: 1px;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    margin-top: 50px;
+    transition: 0s ease-in-out;
+    background: linear-gradient(110deg, #ffd149 0%, #fa7e1e 20%, #d62a76 50%, #a938d6 70%, #4f5bd5 90%);
+    overflow: hidden; /* Ensure the pseudo-element stays within the button */
 }
 
 .submit-button:hover {
-    border: 1px solid #454545;
-    color: #454545;
+    /*border: 1px solid #454545;*/
+    color: #fff;
+    opacity: 0.8;
 }
 
-button.disabled {
+.submit-button.disabled {
     opacity: 0.5;
     cursor: not-allowed;
 }
@@ -432,7 +460,7 @@ button.disabled {
 
 
 
-.popup-content .submit-button {
+/*.popup-content .submit-button {
     font-family: "Roboto";
     padding: 10px 50px;
     padding-top: 12px;
@@ -458,4 +486,4 @@ button.disabled {
 .popup-content .submit-button.disabled {
     background-color: #ccc;
     cursor: not-allowed;
-}
+}*/
