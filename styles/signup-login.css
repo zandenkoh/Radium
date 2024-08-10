@@ -655,7 +655,7 @@ button:hover {
     
     .mobile-warning-container {
         background-color: #fff;
-        padding: 14%;
+        padding: 10%;
         border-radius: 8px;
         width: 100%;
         margin: auto;
@@ -677,7 +677,8 @@ button:hover {
     
     #mobile-ok-button {
         margin-top: 20px;
-        padding: 14px 100px;
+        padding: 14px 10px;
+        width: 80%;
         border: none;
         background-color: #1a8cd8;
         color: white;
