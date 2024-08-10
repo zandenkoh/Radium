@@ -672,15 +672,11 @@ button:hover {
         line-height: 1.5;
         font-weight: 400;
         color: #454545;
-        margin-bottom: 50px;
-    }
-
-    .mobile-warning-container a {
-        margin-top: 40px;   
+        margin-bottom: 30px;
     }
     
     #mobile-ok-button {
-        margin-bottom: -50px;
+        margin-top: 20px;
         padding: 14px 100px;
         border: none;
         background-color: #1a8cd8;
@@ -688,6 +684,9 @@ button:hover {
         border-radius: 50px;
         cursor: pointer;
         text-decoration: none;
+        white-space: nowrap; /* Ensure the text doesn't wrap */
+        overflow: hidden; /* Prevent any overflow */
+        display: inline-block; /* Ensure it's inline with padding */
     }
 
     #mobile-ok-button:hover, #mobile-ok-button:active {
