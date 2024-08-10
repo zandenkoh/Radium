@@ -1,3 +1,17 @@
+document.addEventListener('DOMContentLoaded', function() {
+    // Check if the screen width is less than 900px
+    if (window.innerWidth < 900) {
+        // Get the current page's URL
+        const currentPage = window.location.pathname;
+
+        // Check if the user is not already on join.html
+        if (!currentPage.endsWith("join.html")) {
+            // Redirect to join.html if the condition is met
+            window.location.href = "join.html";
+        }
+    }
+});
+
 // Initialize Firebase
 const firebaseConfig = {
     apiKey: "AIzaSyBsG6KOqNFSmgmW5FFdEdnvIegKYFdaFko",
