@@ -682,8 +682,6 @@ button:hover {
     #mobile-ok-button {
         margin-bottom: -50px;
         padding: 14px 100px;
-        width: 300px;
-        min-width: 300px;
         border: none;
         background-color: #1a8cd8;
         color: white;
