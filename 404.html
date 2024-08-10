@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Page Not Found</title>
+    <style>
+body {
+    font-family: "Roboto", sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    background-color: #fff;
+    color: #333;
+    user-select: none;
+}
+
+.container {
+    display: flex;
+    max-width: 900px;
+    background-color: white;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    overflow: hidden;
+    width: 100%;
+    margin: 0 20px;
+}
+
+.left-side {
+    flex: 2; /* Increase this to give more space to the left side */
+    display: flex;
+    align-items: right;
+    justify-content: right;
+}
+
+.left-side img {
+    max-width: 65%;
+    height: auto;
+    object-fit: cover;
+    object-position: center;
+    -webkit-user-drag: none;
+    user-select: none;
+}
+
+.right-side {
+    flex: 2; /* Decrease this to give less space to the right side */
+    padding: 40px;
+    text-align: left;
+}
+
+.right-side h1 {
+    font-size: 100px;
+    margin: 0 0 10px;
+    color: #000;
+}
+
+.right-side p.first {
+    font-size: 22px;
+    font-weight: 600;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    color: #000;
+}
+
+.right-side p {
+    font-size: 15px;
+    margin: 10px 0;
+    margin-bottom: 40px;
+    color: #757575;
+}
+
+.buttons {
+    margin-top: 30px;
+}
+
+button {
+    padding: 12px 25px;
+    width: 50%;
+    font-size: 15px;
+    cursor: pointer;
+    border: none;
+    border-radius: 50px;
+    background-color: #1d9bef;
+    color: #fff;
+}
+
+button:hover {
+    background-color: #1a8cd8;
+}
+
+@media (max-width: 768px) {
+    .container {
+        flex-direction: column;
+    }
+
+    .left-side img {
+        width: 100%;
+        border-radius: 10px 10px 0 0;
+    }
+
+    .right-side {
+        padding: 20px;
+    }
+
+    .right-side h1 {
+        font-size: 48px;
+    }
+
+    .right-side p.first {
+        font-size: 20px;
+    }
+
+    .right-side p {
+        font-size: 16px;
+    }
+}
+
+    </style>
+</head>
+<body>
+    <div class="left-side">
+        <img class="404-image" src="assets/404-image.jpg">
+    </div>
+    <div class="right-side">
+        <h1>404</h1>
+        <p class="first">Page not found</p>
+        <p>Sorry, the page you are looking for does not exist.</p>
+        <!--<p>Take me to:</p>-->
+        <div class="buttons">
+            <button onclick="window.location.href='index.html'">Go to home</button>
+        </div>
+    </div>
+</body>
+</html>
