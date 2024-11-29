@@ -282,6 +282,7 @@ button:hover {
 
 .article {
     display: flex;
+    flex-direction: column;
     align-items: flex-start;
     margin-bottom: 20px;
     padding: 20px;
@@ -291,6 +292,12 @@ button:hover {
     text-decoration: none; /* Ensure no underline on the link */
     color: inherit; /* Ensure text color is consistent */
     width: 100%;
+    
+}
+
+.article a {
+  cursor: pointer;
+  text-decoration: none;
 }
 
 .article b {
@@ -301,6 +308,7 @@ button:hover {
 }
 
 .article-link {
+  cursor: pointer;
     display: block;
     text-decoration: none; /* Remove default link styling */
 }
@@ -335,6 +343,18 @@ button:hover {
     font-size: 15px;
     color: #636363;
     font-family: 'Roboto';  
+    text-decoration: none;
+}
+
+.author-name a, .author-name b {
+  color: #000;
+  text-decoration: none;
+}
+
+.author-name a:hover, .author-name b:hover {
+  text-decoration: underline;
+  text-decoration-color: #000;
+  cursor: pointer;
 }
 
 .publish-date {
