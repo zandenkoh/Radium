@@ -118,7 +118,11 @@ const firebaseConfig = {
     
       try {
           const articlesContainer = document.getElementById('articles-container');
-          let query = db.collection('posts').orderBy('timestamp', 'desc').limit(5);
+          //let query = db.collection('posts').orderBy('timestamp', 'desc').limit(5);
+          let query = db.collection('posts')
+            .orderBy('timestamp', 'desc') // Ensure 'timestamp' exists and is indexed in Firestore
+            .limit(5);
+
     
           if (filter !== 'all') {
               query = query.where('theme', '==', filter);
@@ -156,24 +160,31 @@ const firebaseConfig = {
     
               // Generate HTML for the article
               articleElement.innerHTML = `
-                  <a href="article.html?id=${doc.id}" class="article-link">
+                  <div class="article-link">
                       <div class="article-header">
                           <div class="author-info">
                               <img src="${authorData.profilePicture || './assets/default-profile-pic.jpg'}" alt="Author" class="author-pic">
                               <div class="author-details">
-                                  <p class="author-name" href="user.html?userId=${data.authorId}"><b>${authorData.name || 'Unknown Author'}</b> in <b>${data.theme || 'Topic'}</b></p>
+                                  <p class="author-name"><a title="Written by ${authorData.name || 'an unknown author'}" href="user.html?userId=${data.authorId}">${authorData.name || 'Unknown Author'}</a> in <b title="${data.theme || 'Topic'}">${data.theme || 'Topic'}</b></p>
                               </div>
                           </div>
                       </div>
-                      <div class="article-body">
+                      <a class="article-body" title="${data.title || 'No Title'}" href="article.html?id=${doc.id}">
                           <div class="article-text">
                               <h2 class="article-title">${data.title || 'No Title'}</h2>
-                              <p class="article-excerpt">${data.description ? data.description.substring(0, 125) + '...' : 'No content available.'}</p>
-                              <span class="publish-date">${data.timestamp ? new Date(data.timestamp.seconds * 1000).toLocaleDateString('en-GB', { month: 'long', day: 'numeric', year: 'numeric' }) : 'Unknown Date'} • ${data.timeRead || 'Unknown number of'} min read</span>
+                              <p title="${data.description || 'No Description'}" class="article-excerpt">
+                                  ${data.description
+                                      ? (data.description.length > 125 
+                                          ? data.description.substring(0, 125) + '...' 
+                                          : data.description)
+                                      : 'No content available.'}
+                              </p>
+
+                              <span class="publish-date" title="${data.timestamp ? new Date(data.timestamp.seconds * 1000).toLocaleDateString('en-GB', { month: 'long', day: 'numeric', year: 'numeric' }) : 'Unknown Date'} • ${data.timeRead || 'Unknown number of'} min read">${data.timestamp ? new Date(data.timestamp.seconds * 1000).toLocaleDateString('en-GB', { month: 'long', day: 'numeric', year: 'numeric' }) : 'Unknown Date'} • ${data.timeRead || 'Unknown number of'} min read</span>
                           </div>
                           <img src="${data.imageUrl || 'https://www.impactmania.com/wp-content/themes/cardinal/images/default-thumb.png'}" class="article-image" style="object-fit: cover;">
-                      </div>
-                  </a>
+                      </a>
+                  </div>
               `;
     
               // Append article element to the container
