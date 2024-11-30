@@ -347,6 +347,8 @@ button:hover {
 }
 
 .author-name a, .author-name b {
+    font-weight: 400;
+    font-size: 15px;
   color: #000;
   text-decoration: none;
 }
